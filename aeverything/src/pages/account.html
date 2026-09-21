@@ -1,0 +1,53 @@
+<!--@title: My Account — æverything-->
+<!--@desc: Your æverything account — orders, wishlist, addresses, payment methods and settings.-->
+<!--@body: sky-->
+<!--@footer: a-->
+
+<section class="phead">
+  <div class="wrap"><h1 class="h-page rv">My Account</h1></div>
+</section>
+
+<section class="sect-b">
+  <div class="wrap">
+    <div class="acct">
+
+      <nav class="acct-nav rv">
+        <a href="account.html" class="is-on">Dashboard</a>
+        <a href="#">Orders</a>
+        <a href="#">Wishlist</a>
+        <a href="#">Addresses</a>
+        <a href="#">Payment Methods</a>
+        <a href="#">Settings</a>
+        <a href="#">Log Out</a>
+      </nav>
+
+      <div class="acct-card glass rv">
+        <h3>Overview</h3>
+        <p class="lede" style="margin-bottom:16px">Welcome back, Gaia.</p>
+        <a href="#" class="btn btn-glass btn-sm" style="margin-bottom:26px">View Orders <svg><use href="#i-arr-r"/></svg></a>
+
+        <h3 style="margin-top:6px">Recent Orders</h3>
+        <table class="orders">
+          <thead>
+            <tr><th>Order</th><th>Date</th><th>Total</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>#AE1034</td><td>Apr 22, 2025</td><td>&pound;120.00</td><td><span class="st st-ok">Delivered</span></td></tr>
+            <tr><td>#AE1023</td><td>Apr 15, 2025</td><td>&pound;85.00</td><td><span class="st st-ok">Delivered</span></td></tr>
+            <tr><td>#AE1022</td><td>Apr 08, 2025</td><td>&pound;65.00</td><td><span class="st st-pn">Processing</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="acct-card glass wishlist rv">
+        <h3>Wishlist</h3>
+        <div class="wish-grid">
+          <div class="wish-it">{{g-hood}}</div>
+          <div class="wish-it">{{g-cap}}</div>
+        </div>
+        <a href="#" class="btn btn-glass btn-block btn-sm">View Wishlist <svg><use href="#i-arr-r"/></svg></a>
+      </div>
+
+    </div>
+  </div>
+</section>

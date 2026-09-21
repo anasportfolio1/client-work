@@ -1,0 +1,112 @@
+<header class="hdr">
+  <div class="hdr-in">
+    <div class="hdr-l">
+      <button class="burger" data-open="#menu" aria-label="Open menu"><span></span></button>
+      <a href="index.html" class="logo">&aelig;verything</a>
+    </div>
+    <nav class="nav" aria-label="Primary">
+      <a href="shop.html">Shop</a>
+      <a href="shop.html?c=women">Women</a>
+      <a href="shop.html?c=men">Men</a>
+      <a href="shop.html?c=accessories">Accessories</a>
+      <a href="magazine.html">&AElig; Magazine</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="education.html">Education</a>
+      <a href="world.html">World of &AElig;</a>
+    </nav>
+    <div class="hdr-r">
+      <button class="ico" data-open="#search" aria-label="Search"><svg><use href="#i-search"/></svg></button>
+      <a href="account.html" class="ico" aria-label="Account"><svg><use href="#i-user"/></svg></a>
+      <button class="ico" data-open="#cart" aria-label="Cart"><svg><use href="#i-bag"/></svg><span class="badge" data-cart-count>2</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="scrim" id="scrim"></div>
+
+<!-- MENU DRAWER -->
+<aside class="drawer drawer-l" id="menu" aria-label="Menu">
+  <div class="drawer-hd">
+    <span class="logo" style="font-size:20px">&aelig;verything</span>
+    <button class="x" data-close aria-label="Close"><svg><use href="#i-close"/></svg></button>
+  </div>
+  <div class="drawer-bd">
+    <nav class="mnav">
+      <a href="shop.html">Shop <svg><use href="#i-arr-r"/></svg></a>
+      <a href="shop.html?c=women">Women <svg><use href="#i-arr-r"/></svg></a>
+      <a href="shop.html?c=men">Men <svg><use href="#i-arr-r"/></svg></a>
+      <a href="shop.html?c=accessories">Accessories <svg><use href="#i-arr-r"/></svg></a>
+      <a href="magazine.html">&AElig; Magazine <svg><use href="#i-arr-r"/></svg></a>
+      <a href="gallery.html">Gallery <svg><use href="#i-arr-r"/></svg></a>
+      <a href="education.html">Education <svg><use href="#i-arr-r"/></svg></a>
+      <a href="world.html">World of &AElig; <svg><use href="#i-arr-r"/></svg></a>
+    </nav>
+    <p class="eyebrow" style="margin:26px 0 8px">Also in the &AElig; world</p>
+    <nav class="mnav">
+      <a href="mentorship.html" class="mnav-sub">Mentorship <svg><use href="#i-arr-r"/></svg></a>
+      <a href="fitness.html" class="mnav-sub">&AElig;verything Fitness <svg><use href="#i-arr-r"/></svg></a>
+      <a href="account.html" class="mnav-sub">My Account <svg><use href="#i-arr-r"/></svg></a>
+    </nav>
+  </div>
+  <div class="drawer-ft">
+    <div class="socials" style="justify-content:flex-start;margin:0">
+      <a class="soc" href="#" aria-label="Instagram"><svg><use href="#s-ig"/></svg></a>
+      <a class="soc" href="#" aria-label="TikTok"><svg><use href="#s-tt"/></svg></a>
+      <a class="soc" href="#" aria-label="X"><svg><use href="#s-x"/></svg></a>
+      <a class="soc" href="#" aria-label="YouTube"><svg><use href="#s-yt"/></svg></a>
+      <a class="soc" href="#" aria-label="Pinterest"><svg><use href="#s-pin"/></svg></a>
+    </div>
+  </div>
+</aside>
+
+<!-- CART DRAWER -->
+<aside class="drawer drawer-r" id="cart" aria-label="Bag">
+  <div class="drawer-hd">
+    <h3 class="h-sec" style="font-size:14px">Your Bag <span class="pink">(2)</span></h3>
+    <button class="x" data-close aria-label="Close"><svg><use href="#i-close"/></svg></button>
+  </div>
+  <div class="drawer-bd">
+    <div class="cart-item">
+      <div class="cart-thumb">{{g-crop}}</div>
+      <div>
+        <h4 class="h-card" style="margin-bottom:3px">&AElig; Crop Top</h4>
+        <p class="tiny muted">Bubble Gum &middot; M &middot; Qty 1</p>
+      </div>
+      <b>&pound;40.00</b>
+    </div>
+    <div class="cart-item">
+      <div class="cart-thumb">{{g-legg}}</div>
+      <div>
+        <h4 class="h-card" style="margin-bottom:3px">&AElig; Leggings</h4>
+        <p class="tiny muted">Bubble Gum &middot; M &middot; Qty 1</p>
+      </div>
+      <b>&pound;55.00</b>
+    </div>
+    <div style="margin-top:22px">
+      <div class="cart-line"><span class="muted">Subtotal</span><b>&pound;95.00</b></div>
+      <div class="cart-line"><span class="muted">Shipping</span><b>Free</b></div>
+      <div class="cart-line" style="border-top:1px solid rgba(255,255,255,.18);margin-top:6px;padding-top:12px;font-size:15px"><b>Total</b><b>&pound;95.00</b></div>
+    </div>
+  </div>
+  <div class="drawer-ft">
+    <a href="#" class="btn btn-block" style="margin-bottom:9px">Checkout</a>
+    <a href="shop.html" class="btn btn-glass btn-block">Continue Shopping</a>
+  </div>
+</aside>
+
+<!-- SEARCH -->
+<div class="searchbox" id="search" aria-label="Search">
+  <div class="searchbox-in">
+    <form onsubmit="return false">
+      <input class="search-f" type="search" placeholder="Search products, articles, lessons&hellip;" aria-label="Search">
+      <button class="search-go" aria-label="Go"><svg><use href="#i-arr-r"/></svg></button>
+    </form>
+    <div class="search-sug">
+      <a class="pill" href="shop.html">Bubble Gum</a>
+      <a class="pill" href="shop.html">New In</a>
+      <a class="pill" href="magazine.html">Shadow Work</a>
+      <a class="pill" href="education.html">Hermetic Principles</a>
+      <a class="pill" href="fitness.html">Mobility</a>
+    </div>
+  </div>
+</div>
