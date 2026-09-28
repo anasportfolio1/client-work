@@ -67,58 +67,49 @@ table{border-collapse:collapse;width:100%}
 ::-webkit-scrollbar-thumb:hover{background:var(--pink-400)}
 
 /* ---------- 3. SKY & CLOUDS ---------- */
+/* Photographic sky. Two layers:
+     ::before  the photo, pinned to the viewport so it never tiles or
+               stretches, and the clouds stay put while content scrolls
+     ::after   the brand tint, which DOES scroll, so the colour still
+               travels from deep blue at the top to bright cloud at the
+               footer exactly as the mockups do
+   position:fixed is used rather than background-attachment:fixed because
+   iOS Safari ignores the latter. */
 .sky{
   position:relative; isolation:isolate;
-  background:
-    /* sun, upper left — tight bright core, short falloff */
-    radial-gradient(26% 24% at 3% -3%,
-      rgba(255,255,255,.78) 0%, rgba(255,255,255,.38) 20%,
-      rgba(220,238,255,.12) 44%, transparent 68%),
-    /* cumulus bank sitting on the horizon */
-    radial-gradient(42% 22% at 12% 99%, rgba(255,255,255,.9), transparent 70%),
-    radial-gradient(38% 19% at 34% 103%, rgba(255,255,255,.84), transparent 70%),
-    radial-gradient(46% 24% at 62% 100%, rgba(255,255,255,.88), transparent 70%),
-    radial-gradient(34% 18% at 87% 103%, rgba(255,255,255,.8), transparent 70%),
-    /* bright haze along the bottom */
-    radial-gradient(170% 26% at 50% 100%,
-      rgba(255,255,255,.8) 0%, rgba(226,241,255,.34) 32%, transparent 66%),
-    linear-gradient(180deg,
-      #08367F 0%, #0D49A6 8%, #145BBE 18%, #1E6CCC 30%,
-      #2878D4 42%, #3385DA 54%, #4694E1 66%, #63A6E8 78%,
-      #85BAEE 88%, #A3CBF3 95%, #B6D8F6 100%);
+  background:#1E6CCC;            /* holds the colour while the photo loads */
 }
-.sky::before,.sky::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none}
-
-/* Two passes of the same cloud tile at different scales — the big one reads
-   as cloud banks, the small one as the wisps between them. Full strength all
-   the way up, so the sky never falls back to flat blue behind the nav. */
 .sky::before{
-  background-image:var(--cloud-noise);
-  background-size:1800px 1010px;
-  background-repeat:repeat;
-  opacity:.74;
-  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.55) 0%,#000 18%,#000 88%,rgba(0,0,0,.4) 96%,transparent 100%);
-          mask-image:linear-gradient(180deg,rgba(0,0,0,.55) 0%,#000 18%,#000 88%,rgba(0,0,0,.4) 96%,transparent 100%);
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:var(--sky-photo) center center / cover no-repeat;
 }
-/* second, smaller pass adds the wisps between the banks */
 .sky::after{
-  background-image:var(--cloud-noise);
-  background-size:780px 440px;
-  background-position:38% 24%;
-  background-repeat:repeat;
-  opacity:.32;
-  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 26%,#000 86%,transparent 100%);
-          mask-image:linear-gradient(180deg,transparent 0%,#000 26%,#000 86%,transparent 100%);
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    /* sun, upper left */
+    radial-gradient(26% 24% at 3% -3%,
+      rgba(255,255,255,.5) 0%, rgba(255,255,255,.2) 22%, transparent 66%),
+    /* bright haze along the bottom, into the footer */
+    radial-gradient(170% 22% at 50% 100%,
+      rgba(255,255,255,.82) 0%, rgba(226,241,255,.3) 34%, transparent 66%),
+    /* brand blue — heavy at the top so white nav and headline stay readable */
+    linear-gradient(180deg,
+      rgba(6,34,86,.62) 0%, rgba(11,58,138,.44) 14%, rgba(20,91,190,.26) 32%,
+      rgba(40,120,212,.15) 52%, rgba(110,175,234,.12) 76%,
+      rgba(168,208,244,.24) 92%, rgba(190,222,248,.34) 100%);
 }
 .sky-soft{background:linear-gradient(180deg,var(--sky-800) 0%,var(--sky-700) 22%,var(--sky-600) 46%,var(--sky-400) 74%,var(--sky-200) 100%)}
-.sky-deep{
+/* Education / lesson pages keep the same photo, under a much darker tint. */
+.sky-deep{background:#123663}
+.sky-deep::after{
   background:
-    radial-gradient(160% 20% at 50% 100%, rgba(255,255,255,.9) 0%, rgba(200,228,252,.35) 34%, transparent 66%),
+    radial-gradient(160% 18% at 50% 100%,
+      rgba(255,255,255,.7) 0%, rgba(200,228,252,.24) 36%, transparent 66%),
     linear-gradient(180deg,
-      #0A2144 0%, #0E2C56 12%, #123663 26%, #16406F 40%,
-      #1B4D82 54%, #24619C 68%, #3C7FC2 81%, #6BA3DC 91%, #9CC6EF 100%);
+      rgba(5,20,46,.90) 0%, rgba(7,30,66,.86) 20%, rgba(10,42,88,.80) 44%,
+      rgba(18,64,124,.66) 68%, rgba(56,118,196,.44) 86%,
+      rgba(140,194,238,.32) 100%);
 }
-.sky-deep::after{opacity:.5}
 .sky-deep .glass-dark{background:rgba(5,19,40,.5);border-color:rgba(255,255,255,.14)}
 
 /* ---------- 4. TYPE ---------- */

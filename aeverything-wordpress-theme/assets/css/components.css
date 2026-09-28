@@ -4,8 +4,8 @@
 
 /* cloud texture (used by .sky::before) */
 :root{
-  /* seamless cloud tile, pre-rendered by tools/make-clouds.js */
-  --cloud-noise:url("../img/clouds.png");
+  /* photographic sky — Unsplash Licence, free for commercial use */
+  --sky-photo:url("../img/sky.webp");
 }
 
 /* ---------- HEADER ---------- */
@@ -249,7 +249,7 @@
 }
 .ph::after{
   content:"";position:absolute;inset:0;z-index:2;opacity:.16;
-  background-image:var(--cloud-noise);background-size:520px 340px;mix-blend-mode:overlay;
+  background-image:var(--sky-photo);background-size:520px 340px;mix-blend-mode:overlay;
 }
 .ph-lb{
   position:relative;z-index:3;padding:6px 13px;border-radius:99px;
