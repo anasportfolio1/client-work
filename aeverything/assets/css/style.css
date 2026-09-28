@@ -70,30 +70,45 @@ table{border-collapse:collapse;width:100%}
 .sky{
   position:relative; isolation:isolate;
   background:
-    radial-gradient(160% 22% at 50% 100%, rgba(255,255,255,.92) 0%, rgba(226,241,255,.4) 34%, rgba(226,241,255,0) 66%),
+    /* sun, upper left — tight bright core, short falloff */
+    radial-gradient(26% 24% at 3% -3%,
+      rgba(255,255,255,.78) 0%, rgba(255,255,255,.38) 20%,
+      rgba(220,238,255,.12) 44%, transparent 68%),
+    /* cumulus bank sitting on the horizon */
+    radial-gradient(42% 22% at 12% 99%, rgba(255,255,255,.9), transparent 70%),
+    radial-gradient(38% 19% at 34% 103%, rgba(255,255,255,.84), transparent 70%),
+    radial-gradient(46% 24% at 62% 100%, rgba(255,255,255,.88), transparent 70%),
+    radial-gradient(34% 18% at 87% 103%, rgba(255,255,255,.8), transparent 70%),
+    /* bright haze along the bottom */
+    radial-gradient(170% 26% at 50% 100%,
+      rgba(255,255,255,.8) 0%, rgba(226,241,255,.34) 32%, transparent 66%),
     linear-gradient(180deg,
-      #062A66 0%, #0C46A0 6%, #1559BE 14%, #2470D2 26%,
-      #3C85DD 40%, #4E94E2 54%, #649FE6 68%, #7FB4EC 80%,
-      #96C4F1 90%, #A8CFF4 96%, #B6D8F6 100%);
+      #08367F 0%, #0D49A6 8%, #145BBE 18%, #1E6CCC 30%,
+      #2878D4 42%, #3385DA 54%, #4694E1 66%, #63A6E8 78%,
+      #85BAEE 88%, #A3CBF3 95%, #B6D8F6 100%);
 }
 .sky::before,.sky::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none}
-/* tiled cloud texture — subtle, strongest through the middle */
+
+/* Two passes of the same cloud tile at different scales — the big one reads
+   as cloud banks, the small one as the wisps between them. Full strength all
+   the way up, so the sky never falls back to flat blue behind the nav. */
 .sky::before{
   background-image:var(--cloud-noise);
-  background-size:1500px 820px;
+  background-size:1700px 950px;
   background-repeat:repeat;
-  opacity:.34;
-  -webkit-mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.22) 20%,rgba(0,0,0,.6) 44%,#000 66%,#000 90%,transparent 100%);
-          mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.22) 20%,rgba(0,0,0,.6) 44%,#000 66%,#000 90%,transparent 100%);
+  opacity:.74;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.55) 0%,#000 18%,#000 88%,rgba(0,0,0,.4) 96%,transparent 100%);
+          mask-image:linear-gradient(180deg,rgba(0,0,0,.55) 0%,#000 18%,#000 88%,rgba(0,0,0,.4) 96%,transparent 100%);
 }
+/* second, smaller pass adds the wisps between the banks */
 .sky::after{
-  background:
-    radial-gradient(42% 30% at 12% 97%, rgba(255,255,255,.95), transparent 70%),
-    radial-gradient(38% 26% at 34% 101%, rgba(255,255,255,.88), transparent 70%),
-    radial-gradient(46% 32% at 62% 99%, rgba(255,255,255,.92), transparent 70%),
-    radial-gradient(34% 24% at 86% 102%, rgba(255,255,255,.85), transparent 70%),
-    radial-gradient(30% 18% at 50% 88%, rgba(255,255,255,.5), transparent 72%);
-  filter:blur(1px);
+  background-image:var(--cloud-noise);
+  background-size:780px 440px;
+  background-position:38% 24%;
+  background-repeat:repeat;
+  opacity:.32;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 26%,#000 86%,transparent 100%);
+          mask-image:linear-gradient(180deg,transparent 0%,#000 26%,#000 86%,transparent 100%);
 }
 .sky-soft{background:linear-gradient(180deg,var(--sky-800) 0%,var(--sky-700) 22%,var(--sky-600) 46%,var(--sky-400) 74%,var(--sky-200) 100%)}
 .sky-deep{

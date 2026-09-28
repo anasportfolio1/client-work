@@ -32,11 +32,11 @@ function octave(n) {
 
 /* fractal sum: big soft shapes + finer detail */
 const octs = [
-  { f: octave(3),  amp: 0.50 },
-  { f: octave(6),  amp: 0.26 },
-  { f: octave(12), amp: 0.14 },
-  { f: octave(24), amp: 0.07 },
-  { f: octave(48), amp: 0.03 },
+  { f: octave(2),  amp: 0.42 },
+  { f: octave(4),  amp: 0.26 },
+  { f: octave(8),  amp: 0.17 },
+  { f: octave(16), amp: 0.09 },
+  { f: octave(32), amp: 0.06 },
 ];
 
 const px = Buffer.alloc(W * H * 4);
@@ -44,11 +44,17 @@ for (let y = 0; y < H; y++) {
   for (let x = 0; x < W; x++) {
     const u = x / W, v = y / H;
     let n = 0;
-    for (const o of octs) n += o.f(u, v) * o.amp;
-    // steep ramp: most of the tile stays transparent, peaks become cloud
-    let a = (n - 0.44) * 3.4;
+    for (let k = 0; k < octs.length; k++) {
+      const o = octs[k];
+      const raw = o.f(u, v);
+      // first two octaves stay smooth (the big banks); the rest billow
+      n += ( k < 2 ? raw : Math.abs( raw * 2 - 1 ) ) * o.amp;
+    }
+    // broad ramp: most of the tile carries cloud, so the sky never reads as flat blue
+    let a = ( n - 0.33 ) * 2.5;
     a = a < 0 ? 0 : a > 1 ? 1 : a;
-    a = a * a * (3 - 2 * a);                          // soften the edges
+    a = a * a * (3 - 2 * a);      // soften the edges
+    a = Math.pow( a, 1.08 );      // slight sharpen, keeps the cores bright
     const i = (y * W + x) * 4;
     px[i] = 255; px[i + 1] = 255; px[i + 2] = 255;    // white cloud
     px[i + 3] = Math.round(a * 255);
