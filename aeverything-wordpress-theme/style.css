@@ -1,0 +1,98 @@
+/*
+Theme Name: Æverything
+Theme URI: https://andeverything.com
+Author: Anas
+Description: Custom WooCommerce theme for æverything — a UK lifestyle brand. Shop, Æ Magazine, Gallery, Education, World of Æ, Mentorship, Fitness and AI video briefs. Glassmorphism over a cloud sky, bubble-gum pink accent.
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.8
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: aeverything
+Tags: e-commerce, custom-colors, custom-menu, custom-logo, featured-images, translation-ready
+*/
+
+/*
+  The real stylesheets live in assets/css/ and are enqueued from functions.php:
+    style.css      — design tokens, reset, sky, typography, buttons, glass
+    components.css — header, drawers, hero widgets, cards, footer
+    pages.css      — per-page layouts and responsive rules
+
+  This file exists because WordPress requires it to recognise the theme.
+  Put any quick overrides below.
+*/
+
+/* ---------- FORMS (AI video brief, contact) ---------- */
+.ae-form{padding:clamp(20px,3vw,38px);display:flex;flex-direction:column;gap:26px}
+.ae-fs{border:0;padding:0;margin:0}
+.ae-fs legend{margin-bottom:14px;padding:0}
+.ae-row{margin-bottom:16px}
+.ae-lb{display:block;font-size:11.5px;font-weight:600;letter-spacing:.06em;margin-bottom:7px;color:rgba(255,255,255,.9)}
+.ae-lb em{color:var(--pink-400);font-style:normal}
+.ae-input{
+  width:100%;padding:12px 16px;border-radius:14px;
+  background:rgba(255,255,255,.13);border:1px solid var(--glass-brd-soft);
+  color:#fff;font-size:14px;font-family:inherit;
+  transition:border-color .3s var(--e),background .3s var(--e);
+}
+.ae-input::placeholder{color:rgba(255,255,255,.5)}
+.ae-input:focus{border-color:var(--pink-400);background:rgba(255,255,255,.2)}
+textarea.ae-input{resize:vertical;min-height:96px;line-height:1.55}
+.ae-file{
+  width:100%;padding:11px 14px;border-radius:14px;font-size:13px;
+  background:rgba(255,255,255,.09);border:1px dashed rgba(255,255,255,.34);color:rgba(255,255,255,.9);
+  cursor:pointer;transition:border-color .3s var(--e),background .3s var(--e);
+}
+.ae-file:hover{border-color:var(--pink-400);background:rgba(255,255,255,.15)}
+.ae-file::file-selector-button{
+  margin-right:12px;padding:7px 14px;border:0;border-radius:99px;cursor:pointer;
+  background:linear-gradient(120deg,var(--pink-600),var(--pink-400));color:#fff;
+  font-family:var(--f-display);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+}
+.ae-hint{display:block;margin-top:6px;font-size:11px;color:rgba(255,255,255,.55)}
+.ae-opts{display:flex;flex-wrap:wrap;gap:8px}
+.ae-opt{
+  display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.11);border:1px solid var(--glass-brd-soft);
+  font-size:12.5px;cursor:pointer;transition:all .26s var(--e);
+}
+.ae-opt:hover{background:rgba(255,255,255,.22)}
+.ae-opt input{accent-color:var(--pink-500);width:15px;height:15px;cursor:pointer}
+.ae-opt:has(input:checked){background:rgba(255,61,110,.24);border-color:var(--pink-400)}
+.ae-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+.ae-notice{padding:clamp(18px,2.4vw,30px);margin-bottom:22px}
+.ae-notice-ok{border-left:3px solid #6FE8AE}
+.ae-notice-err{border-left:3px solid var(--pink-500)}
+.ae-notice-err p{font-size:13.5px;color:var(--pink-200)}
+
+/* ---------- EDITOR CONTENT (pages, articles) ---------- */
+.ae-prose{font-size:14.5px;line-height:1.7;color:rgba(255,255,255,.88);font-weight:300}
+.ae-prose > * + *{margin-top:16px}
+.ae-prose h2{font-size:clamp(18px,1.9vw,26px);margin-top:30px}
+.ae-prose h3{font-size:clamp(15px,1.5vw,19px);margin-top:24px}
+.ae-prose a{color:var(--pink-300);text-decoration:underline;text-underline-offset:3px}
+.ae-prose ul,.ae-prose ol{padding-left:20px}
+.ae-prose ul li{list-style:disc}
+.ae-prose ol li{list-style:decimal}
+.ae-prose li{margin-bottom:6px}
+.ae-prose img{border-radius:var(--r-md);margin-block:20px}
+.ae-prose blockquote{
+  padding:16px 22px;border-left:3px solid var(--pink-400);
+  background:rgba(255,255,255,.08);border-radius:0 var(--r) var(--r) 0;font-style:italic;
+}
+
+/* ---------- PAGINATION ---------- */
+.pagination{display:flex;justify-content:center;gap:8px;margin-top:34px}
+.pagination .page-numbers{
+  min-width:38px;height:38px;display:grid;place-items:center;padding:0 12px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.13);border:1px solid var(--glass-brd-soft);
+  font-size:12px;font-weight:600;transition:all .26s var(--e);
+}
+.pagination .page-numbers:hover{background:rgba(255,255,255,.26)}
+.pagination .page-numbers.current{background:#fff;color:var(--sky-900);border-color:#fff}
+
+/* ---------- WP ADMIN BAR OFFSET ---------- */
+body.admin-bar .hdr{top:32px}
+@media (max-width:782px){body.admin-bar .hdr{top:46px}}
