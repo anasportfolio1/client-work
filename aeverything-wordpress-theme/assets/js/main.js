@@ -107,10 +107,30 @@
         if (sub) sub.textContent = s.sub || '';
         if (btn) { btn.textContent = s.btn || ''; btn.href = s.url || '#'; }
         if (model && s.img) {
+          /* Swap behind a fade. The reveal must happen whether the preload
+             resolves, errors, or was already cached — otherwise the model
+             can be left hidden. */
+          /* setTimeout rather than rAF — rAF is suspended in background
+             tabs, which would leave the model permanently hidden. */
+          const reveal = () => setTimeout(() => model.classList.add('in'), 20);
+          const sameImage = model.getAttribute('src') === s.img;
+
+          if (sameImage) { reveal(); return; }
+
           model.classList.remove('in');
+          let done = false;
+          const show = () => {
+            if (done) return;
+            done = true;
+            model.src = s.img;
+            reveal();
+          };
           const pre = new Image();
-          pre.onload = () => { model.src = s.img; requestAnimationFrame(() => model.classList.add('in')); };
+          pre.onload = show;
+          pre.onerror = show;
           pre.src = s.img;
+          if (pre.complete) show();
+          setTimeout(show, 900);          // last resort
         }
       };
 
@@ -131,7 +151,7 @@
       };
 
       if (copy) copy.style.transition = 'opacity .45s var(--e), transform .55s var(--e)';
-      if (model) requestAnimationFrame(() => model.classList.add('in'));
+      if (model) setTimeout(() => model.classList.add('in'), 20);
 
       const play = () => { clearInterval(timer); timer = setInterval(() => go(i + 1), 6000); };
       dots.forEach((d, k) => on(d, 'click', () => { go(k); play(); }));
