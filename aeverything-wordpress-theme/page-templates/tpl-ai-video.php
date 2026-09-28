@@ -23,7 +23,7 @@ if ( $ae_error ) {
 
 $ae_fields = ae_brief_fields();
 $ae_groups = array(
-	__( 'About you', 'aeverything' )          => array( 'name', 'email', 'phone', 'brand' ),
+	__( 'About you', 'aeverything' )          => array( 'package', 'name', 'email', 'phone', 'brand' ),
 	__( 'Your files', 'aeverything' )         => array( '__uploads' ),
 	__( 'Format', 'aeverything' )             => array( 'ratio', 'length', 'quantity', 'platform' ),
 	__( 'Creative direction', 'aeverything' ) => array( 'style', 'script', 'voiceover', 'language', 'captions', 'music' ),
@@ -51,9 +51,39 @@ $ae_groups = array(
 
 		<?php else : ?>
 
+			<!-- PACKAGES -->
+			<p class="lbl rv"><?php esc_html_e( 'Choose a package', 'aeverything' ); ?></p>
+			<div class="pkg-grid rv" id="packages">
+				<?php foreach ( ae_brief_packages() as $ae_key => $ae_pk ) : ?>
+					<button type="button" class="pkg<?php echo ! empty( $ae_pk['best'] ) ? ' pkg-best' : ''; ?>"
+						data-pkg="<?php echo esc_attr( $ae_pk['name'] ); ?>">
+						<?php if ( ! empty( $ae_pk['best'] ) ) : ?>
+							<span class="pkg-flag"><?php esc_html_e( 'Most picked', 'aeverything' ); ?></span>
+						<?php endif; ?>
+						<span class="pkg-name"><?php echo esc_html( $ae_pk['name'] ); ?></span>
+						<span class="pkg-price"><?php echo esc_html( $ae_pk['price'] ); ?></span>
+						<span class="pkg-blurb"><?php echo esc_html( $ae_pk['blurb'] ); ?></span>
+						<span class="pkg-list">
+							<?php foreach ( $ae_pk['items'] as $ae_it ) : ?>
+								<span><?php ae_icon( 'i-check' ); ?><?php echo esc_html( $ae_it ); ?></span>
+							<?php endforeach; ?>
+						</span>
+						<span class="pkg-cta">
+							<?php esc_html_e( 'Choose', 'aeverything' ); ?> <?php ae_icon( 'i-arr-r' ); ?>
+						</span>
+					</button>
+				<?php endforeach; ?>
+			</div>
+
 			<?php if ( $ae_error ) : ?>
 				<div class="glass rv ae-notice ae-notice-err"><p><?php echo esc_html( $ae_error ); ?></p></div>
 			<?php endif; ?>
+
+			<div class="brief-wrap" id="briefWrap">
+				<p class="lbl rv" style="margin-top:34px">
+					<?php esc_html_e( 'Your brief', 'aeverything' ); ?>
+					<span class="pkg-chosen" id="pkgChosen"></span>
+				</p>
 
 			<form class="ae-form glass rv" method="post" enctype="multipart/form-data" action="">
 				<?php wp_nonce_field( 'ae_brief', 'ae_brief_nonce' ); ?>
@@ -95,8 +125,18 @@ $ae_groups = array(
 								continue;
 							}
 
-							/* ---- normal fields ---- */
+							/* ---- the package is set by the cards above ---- */
 							$ae_cfg = $ae_fields[ $ae_key ];
+							if ( 'hidden' === $ae_cfg['type'] ) {
+								printf(
+									'<input type="hidden" id="ae_%s" name="ae_%s" value="">',
+									esc_attr( $ae_key ),
+									esc_attr( $ae_key )
+								);
+								continue;
+							}
+
+							/* ---- normal fields ---- */
 							$ae_req = ! empty( $ae_cfg['required'] );
 							?>
 							<div class="ae-row">
@@ -146,6 +186,7 @@ $ae_groups = array(
 					<?php esc_html_e( 'Send My Brief', 'aeverything' ); ?> <?php ae_icon( 'i-arr-r' ); ?>
 				</button>
 			</form>
+			</div><!-- /.brief-wrap -->
 
 		<?php endif; ?>
 

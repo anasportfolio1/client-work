@@ -48,9 +48,44 @@ function ae_register_brief_cpt() {
 }
 add_action( 'init', 'ae_register_brief_cpt' );
 
+/**
+ * Packages shown above the brief. Choosing one scrolls to the form and
+ * locks that package in, so the team knows what was ordered.
+ */
+function ae_brief_packages() {
+	return array(
+		'single' => array(
+			'name'  => '1 Video',
+			'price' => '£95',
+			'blurb' => 'One finished video. Good for testing a product before you scale.',
+			'items' => array( '1 video, any ratio', '2 revisions', '48-hour delivery' ),
+		),
+		'three'  => array(
+			'name'  => '3 Videos',
+			'price' => '£240',
+			'blurb' => 'Enough to test three angles and find what your audience responds to.',
+			'items' => array( '3 videos', '3 ratios included', '2 revisions each', '4-day delivery' ),
+			'best'  => true,
+		),
+		'seven'  => array(
+			'name'  => '7 Videos',
+			'price' => '£490',
+			'blurb' => 'A full week of content from a single shoot of your product.',
+			'items' => array( '7 videos', 'All ratios', 'Voiceover included', 'Captions', '7-day delivery' ),
+		),
+		'custom' => array(
+			'name'  => 'Custom',
+			'price' => 'Talk to us',
+			'blurb' => 'Ongoing volume, a full campaign, or something we have not thought of.',
+			'items' => array( 'Built around your goals', 'Priority turnaround', 'Direct line to the team' ),
+		),
+	);
+}
+
 /** The fields a video team actually needs, in the order they're asked. */
 function ae_brief_fields() {
 	return array(
+		'package'   => array( 'label' => 'Package',          'type' => 'hidden' ),
 		'name'      => array( 'label' => 'Your name',        'type' => 'text',   'required' => true ),
 		'email'     => array( 'label' => 'Email',            'type' => 'email',  'required' => true ),
 		'phone'     => array( 'label' => 'WhatsApp / phone', 'type' => 'text' ),
@@ -90,7 +125,7 @@ function ae_brief_fields() {
 			'options' => array( 'yes' => 'Yes', 'no' => 'No' ) ),
 		'music'     => array( 'label' => 'Music vibe', 'type' => 'text' ),
 
-		'brief'     => array( 'label' => 'Tell us about the product', 'type' => 'textarea', 'required' => true ),
+		'brief'     => array( 'label' => 'Instructions — tell us exactly what you want', 'type' => 'textarea', 'required' => true ),
 		'refs'      => array( 'label' => 'Reference videos you like (links)', 'type' => 'textarea' ),
 		'avoid'     => array( 'label' => 'Anything to avoid', 'type' => 'textarea' ),
 		'deadline'  => array( 'label' => 'Deadline', 'type' => 'date' ),

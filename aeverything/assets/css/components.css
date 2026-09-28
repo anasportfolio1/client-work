@@ -150,6 +150,8 @@
 .hero{
   position:relative;min-height:clamp(560px,86vh,790px);display:flex;align-items:stretch;
   margin-top:calc(var(--head-h) * -1);
+  /* above the sections that follow, so the cut-out is never clipped by them */
+  z-index:5;
 }
 /* bright cloud bank along the bottom of every hero */
 /* No band at the foot of the hero. The sky photo runs straight through to
@@ -157,7 +159,9 @@
 .hero-grid{
   width:100%;max-width:var(--wrap);margin-inline:auto;
   padding:calc(var(--head-h) + 18px) var(--gutter) 40px;
-  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.82fr);gap:30px;align-items:stretch;
+  /* wider image column and no gap, so the cut-out sits close to the
+     widgets the way it does in the mockups instead of stranded right */
+  display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:0;align-items:stretch;
 }
 .hero-l{display:flex;flex-direction:column;justify-content:space-between;gap:28px;position:relative;z-index:4}
 .hero-copy{max-width:640px}
@@ -171,21 +175,39 @@
 /* The model is a cut-out standing on the sky — no panel, no rounded box,
    nothing that could sit over the nav. Bottom-aligned so she stands on the
    fold, exactly as in the mockups. */
+/* The cut-out stands on the bottom edge of the hero and is never clipped.
+   No negative bottom margin — anything hanging below gets covered by the
+   next section. */
 .hero-r{
   position:relative;z-index:3;min-height:340px;
-  margin:0 calc(var(--gutter) * -1) -40px 0;
-  display:flex;align-items:flex-end;justify-content:center;
-  pointer-events:none;
+  margin-right:calc(var(--gutter) * -1);
+  overflow:visible;pointer-events:none;
 }
+/* Absolutely positioned so the cut-out cannot drive the row height — a
+   percentage height on an auto-height parent goes circular and the
+   image's own 1600px wins, pushing the whole hero off screen.
+   max-height then keeps any cut-out the client uploads inside the hero,
+   whatever its proportions. */
 .hero-model{
+  position:absolute;bottom:0;left:0;
   width:auto;max-width:100%;
-  height:clamp(440px,80vh,730px);
-  object-fit:contain;object-position:bottom center;
+  height:clamp(440px,78vh,760px);
+  max-height:100%;
+  object-fit:contain;object-position:bottom left;
   filter:drop-shadow(0 26px 46px rgba(6,26,62,.34));
   opacity:0;transform:translateY(18px) scale(.985);
-  transition:opacity .8s var(--e),transform 1s var(--e);
+  transition:opacity .55s var(--e),transform .65s var(--e);
+  will-change:opacity,transform;
 }
 .hero-model.in{opacity:1;transform:none}
+
+/* Swipe-left transition: current slide leaves to the left, the next
+   enters from the right. Applied to the copy and the cut-out together. */
+.hero-copy,.hero-model{--sw:0px}
+.hero-copy.sw-out{opacity:0;transform:translateX(-46px)}
+.hero-copy.sw-in{opacity:0;transform:translateX(46px);transition:none}
+.hero-model.sw-out{opacity:0;transform:translateX(-56px)}
+.hero-model.sw-in{opacity:0;transform:translateX(56px);transition:none}
 /* placeholder slots keep their panel look until a real cut-out is added */
 .hero-r > .ph{
   position:absolute;inset:0;border-radius:0 0 0 var(--r-xl);overflow:hidden;

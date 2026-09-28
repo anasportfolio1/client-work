@@ -99,6 +99,7 @@
     if (slides.length && title) {
       let i = 0, timer;
 
+      /* Write a slide's text and image into the DOM. */
       const paint = s => {
         title.innerHTML = '<span></span>' + (s.l2 ? '<br><span></span>' : '');
         const spans = title.querySelectorAll('span');
@@ -106,52 +107,56 @@
         if (spans[1]) spans[1].textContent = s.l2;
         if (sub) sub.textContent = s.sub || '';
         if (btn) { btn.textContent = s.btn || ''; btn.href = s.url || '#'; }
-        if (model && s.img) {
-          /* Swap behind a fade. The reveal must happen whether the preload
-             resolves, errors, or was already cached — otherwise the model
-             can be left hidden. */
-          /* setTimeout rather than rAF — rAF is suspended in background
-             tabs, which would leave the model permanently hidden. */
-          const reveal = () => setTimeout(() => model.classList.add('in'), 20);
-          const sameImage = model.getAttribute('src') === s.img;
-
-          if (sameImage) { reveal(); return; }
-
-          model.classList.remove('in');
-          let done = false;
-          const show = () => {
-            if (done) return;
-            done = true;
-            model.src = s.img;
-            reveal();
-          };
-          const pre = new Image();
-          pre.onload = show;
-          pre.onerror = show;
-          pre.src = s.img;
-          if (pre.complete) show();
-          setTimeout(show, 900);          // last resort
-        }
+        if (model && s.img && model.getAttribute('src') !== s.img) model.src = s.img;
       };
 
-      const go = n => {
+      /* Have the next image decoded before the swipe starts, so the
+         incoming frame is never blank. Always settles. */
+      const preload = src => new Promise(res => {
+        if (!src) { res(); return; }
+        const im = new Image();
+        im.onload = im.onerror = res;
+        im.src = src;
+        if (im.complete) res();
+        setTimeout(res, 700);
+      });
+
+      const els  = [copy, model].filter(Boolean);
+      let busy = false;
+
+      /* Swipe left: what's on screen exits to the left, the next slide
+         enters from the right. Copy and cut-out move together. */
+      const go = async n => {
+        if (busy) return;
+        busy = true;
         i = (n + slides.length) % slides.length;
-        if (copy) {
-          copy.style.opacity = '0';
-          copy.style.transform = 'translateY(10px)';
-          setTimeout(() => {
-            paint(slides[i]);
-            copy.style.opacity = '1';
-            copy.style.transform = 'none';
-          }, 280);
-        } else {
-          paint(slides[i]);
-        }
         dots.forEach((d, k) => d.classList.toggle('is-on', k === i));
+
+        await preload(slides[i].img);
+
+        els.forEach(el => { el.classList.remove('in'); el.classList.add('sw-out'); });
+        await new Promise(r => setTimeout(r, 360));
+
+        paint(slides[i]);
+
+        /* jump to the right with the transition suppressed, then release */
+        els.forEach(el => { el.classList.remove('sw-out'); el.classList.add('sw-in'); });
+        await new Promise(r => setTimeout(r, 40));
+        els.forEach(el => { el.classList.remove('sw-in'); el.classList.add('in'); });
+
+        setTimeout(() => { busy = false; }, 420);
       };
 
-      if (copy) copy.style.transition = 'opacity .45s var(--e), transform .55s var(--e)';
-      if (model) setTimeout(() => model.classList.add('in'), 20);
+      if (copy) copy.style.transition = 'opacity .38s var(--e), transform .55s var(--e)';
+
+      /* Start clean and visible. If a transition is ever interrupted the
+         element must not be left stranded in a swipe state. */
+      const settle = () => els.forEach(el => {
+        el.classList.remove('sw-out', 'sw-in');
+        el.classList.add('in');
+      });
+      setTimeout(settle, 20);
+      on(document, 'visibilitychange', () => { if (!document.hidden && !busy) settle(); });
 
       const play = () => { clearInterval(timer); timer = setInterval(() => go(i + 1), 6000); };
       dots.forEach((d, k) => on(d, 'click', () => { go(k); play(); }));
@@ -281,7 +286,31 @@
     f.innerHTML = '<p style="padding:14px 20px;font-size:13.5px;font-weight:600;color:inherit">Welcome to the movement. ✓</p>';
   }));
 
-  /* ---------- 15. LIVE FEEL ---------- */
+  /* ---------- 15. AI VIDEO PACKAGES ---------- */
+  const pkgs = $$('.pkg');
+  if (pkgs.length) {
+    const hidden = $('#ae_package');
+    const chip   = $('#pkgChosen');
+    const wrap   = $('#briefWrap');
+
+    pkgs.forEach(p => on(p, 'click', () => {
+      pkgs.forEach(x => x.classList.remove('is-on'));
+      p.classList.add('is-on');
+
+      const name = p.dataset.pkg || '';
+      if (hidden) hidden.value = name;
+      if (chip) { chip.textContent = name; chip.classList.add('on'); }
+      if (wrap) wrap.classList.add('ready');
+
+      const first = $('#ae_name');
+      if (wrap) {
+        wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => first && first.focus({ preventScroll: true }), 650);
+      }
+    }));
+  }
+
+  /* ---------- 16. LIVE FEEL ---------- */
 
   /* Light follows the cursor across cards and glass panels. */
   const lit = $$('.pcard, .icard, .acard, .edu-card, .wcard, .tile, .dtile, .glass, .glass-dark, .w-clock, .w-drop');

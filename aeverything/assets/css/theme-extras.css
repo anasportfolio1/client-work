@@ -142,6 +142,67 @@ Tags: e-commerce, custom-colors, custom-menu, custom-logo, featured-images, tran
   .has-cursor-light *::before{display:none}
 }
 
+/* ---------- AI VIDEO PACKAGES ---------- */
+.pkg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.2vw,16px)}
+.pkg{
+  position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:9px;
+  padding:24px 20px 20px;border-radius:var(--r-lg);text-align:left;cursor:pointer;
+  background:rgba(255,255,255,.14);border:1px solid var(--glass-brd-soft);
+  backdrop-filter:blur(20px) saturate(140%);color:#fff;
+  transition:transform .42s var(--e),background .42s var(--e),
+             border-color .42s var(--e),box-shadow .42s var(--e);
+}
+.pkg:hover{
+  transform:translateY(-6px);background:rgba(255,255,255,.24);
+  box-shadow:0 24px 54px rgba(6,28,68,.32),0 0 28px rgba(255,140,175,.26);
+}
+.pkg.is-on{
+  background:linear-gradient(150deg,rgba(255,61,110,.28),rgba(255,255,255,.18));
+  border-color:var(--pink-400);
+  box-shadow:0 20px 48px rgba(255,61,110,.3),0 0 0 1px var(--pink-400) inset;
+}
+.pkg-best{border-color:rgba(255,163,190,.6)}
+.pkg-flag{
+  position:absolute;top:-9px;left:20px;padding:4px 12px;border-radius:99px;
+  background:linear-gradient(120deg,var(--pink-600),var(--pink-400));
+  font-family:var(--f-display);font-size:8.5px;font-weight:800;letter-spacing:.16em;
+  text-transform:uppercase;box-shadow:var(--sh-pink);
+}
+.pkg-name{
+  font-family:var(--f-display);font-variation-settings:"wdth" 100;
+  font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+}
+.pkg-price{
+  font-family:var(--f-display);font-variation-settings:"wdth" 98;
+  font-size:clamp(24px,2.3vw,32px);font-weight:800;line-height:1;
+}
+.pkg-blurb{font-size:11.5px;line-height:1.5;color:rgba(255,255,255,.72);font-weight:300}
+.pkg-list{display:flex;flex-direction:column;gap:6px;margin-top:4px;width:100%}
+.pkg-list span{display:flex;align-items:flex-start;gap:8px;font-size:11px;color:rgba(255,255,255,.84)}
+.pkg-list svg{width:13px;height:13px;flex:none;margin-top:1px;stroke-width:1.8;color:var(--pink-300)}
+.pkg-cta{
+  margin-top:auto;padding-top:12px;display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--f-display);font-size:10px;font-weight:800;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--pink-300);transition:gap .3s var(--e)
+}
+.pkg:hover .pkg-cta{gap:14px}
+.pkg-cta svg{width:13px;height:13px;stroke-width:2.3}
+.pkg.is-on .pkg-cta{color:#fff}
+
+.pkg-chosen{
+  display:none;margin-left:10px;padding:4px 12px;border-radius:99px;
+  background:linear-gradient(120deg,var(--pink-600),var(--pink-400));
+  font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+}
+.pkg-chosen.on{display:inline-block}
+
+/* The brief stays out of the way until a package is picked. */
+.brief-wrap{opacity:.42;transition:opacity .5s var(--e)}
+.brief-wrap.ready{opacity:1}
+
+@media (max-width:1040px){ .pkg-grid{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:560px){ .pkg-grid{grid-template-columns:1fr} }
+
 /* ---------- FORMS (AI video brief, contact) ---------- */
 .ae-form{padding:clamp(20px,3vw,38px);display:flex;flex-direction:column;gap:26px}
 .ae-fs{border:0;padding:0;margin:0}
