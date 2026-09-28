@@ -11,6 +11,10 @@ const path = require('path');
    (e.g. to a custom domain) and re-run `node build.js`. Keep the trailing slash. */
 const SITE = 'https://anasportfolio1.github.io/client-work/aeverything/';
 
+/* Cache-buster stamped on every build — without it browsers keep serving
+   the previous CSS and JS for as long as the host says they may. */
+const ASSET_V = Date.now().toString(36);
+
 const ROOT = __dirname;
 const P = f => path.join(ROOT, 'src', 'partials', f);
 const read = f => fs.readFileSync(f, 'utf8');
@@ -58,10 +62,10 @@ const shell = (o) => `<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@94..125,400..800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/components.css">
-<link rel="stylesheet" href="assets/css/pages.css">
-<link rel="stylesheet" href="assets/css/theme-extras.css">
+<link rel="stylesheet" href="assets/css/style.css?v=${ASSET_V}">
+<link rel="stylesheet" href="assets/css/components.css?v=${ASSET_V}">
+<link rel="stylesheet" href="assets/css/pages.css?v=${ASSET_V}">
+<link rel="stylesheet" href="assets/css/theme-extras.css?v=${ASSET_V}">
 <noscript><style>.rv{opacity:1!important;transform:none!important}</style></noscript>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"æverything","slogan":"I am nothing, æverything.","url":"${SITE}"}
@@ -74,7 +78,7 @@ ${header}
 ${o.content}
 </main>
 ${o.footer === 'b' ? footerB : footerA}
-<script src="assets/js/main.js" defer></script>
+<script src="assets/js/main.js?v=${ASSET_V}" defer></script>
 </body>
 </html>
 `;
