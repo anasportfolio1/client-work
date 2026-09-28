@@ -339,35 +339,45 @@
   .nav{display:none}
   .hdr-in{grid-template-columns:auto 1fr auto}
   /* --- MOBILE HERO ---------------------------------------------------
-     Stacked, in reading order:
-       clock + next drop  ->  heading  ->  sub  ->  CTA  ->  dots  ->  model
-     The model is in normal flow here rather than absolutely positioned;
-     the desktop offsets are tuned to a two-column layout and make no
-     sense once everything is one column. */
+       row 1:  clock + next drop, full width
+       row 2:  heading / sub / CTA   |   the model beside it
+     display:contents on .hero-l dissolves its box so the widgets, copy
+     and dots become grid items in their own right and can be placed. */
   .hero{min-height:0;overflow:visible}
   .hero-grid{
-    grid-template-columns:1fr;gap:20px;
+    grid-template-columns:minmax(0,1fr) minmax(110px,.78fr);
+    grid-template-areas:
+      "widgets widgets"
+      "copy    model"
+      "dots    model";
+    column-gap:10px;row-gap:18px;
     padding:calc(var(--head-h) + 16px) var(--gutter) 0;
+    align-items:start;
   }
-  .hero-l{gap:22px;justify-content:flex-start}
+  .hero-l{display:contents}
+  .widgets{grid-area:widgets}
+  .hero-copy{grid-area:copy;align-self:center}
+  .dots{grid-area:dots}
 
   .hero-r{
-    order:2;                       /* after the copy, never above it */
-    margin:2px calc(var(--gutter) * -1) 0;
+    grid-area:model;
+    margin:0 calc(var(--gutter) * -1) 0 0;
     min-height:0;
-    height:clamp(360px,52vh,500px);
+    height:clamp(330px,46vh,440px);
     display:flex;align-items:flex-start;justify-content:center;
     overflow:hidden;
   }
   .hero-model{
     position:relative;top:auto;left:auto;bottom:auto;
     /* absorbs the empty space the cut-out carries above the head */
-    margin-top:-68px;
+    margin-top:-52px;
     width:auto;max-width:none;
-    height:calc(clamp(450px,68vh,640px) * var(--hero-zoom, 1));
+    height:calc(clamp(380px,54vh,520px) * var(--hero-zoom, 1));
+    /* centred: the column is narrower than the image, and the cut-out has
+       transparent margins, so left-aligning shows empty space */
     object-fit:contain;object-position:top center;
-    -webkit-mask-image:linear-gradient(180deg,#000 56%,rgba(0,0,0,.5) 76%,transparent 93%);
-            mask-image:linear-gradient(180deg,#000 56%,rgba(0,0,0,.5) 76%,transparent 93%);
+    -webkit-mask-image:linear-gradient(180deg,#000 58%,rgba(0,0,0,.5) 78%,transparent 94%);
+            mask-image:linear-gradient(180deg,#000 58%,rgba(0,0,0,.5) 78%,transparent 94%);
   }
 
   /* the wash reaches less far up when the hero is shorter */
@@ -418,13 +428,17 @@
   .quote{min-height:150px}
   .art-nav a span{display:none}
   .hero{min-height:auto}
-  /* phone: keep the model generous but let the widgets breathe */
-  .hero-r{height:clamp(330px,48vh,430px)}
-  .hero-model{height:calc(clamp(410px,62vh,560px) * var(--hero-zoom, 1));margin-top:-56px}
+  /* phone: the copy column gets the room, the model stays tall and narrow */
+  .hero-grid{grid-template-columns:minmax(0,1fr) minmax(96px,.62fr);column-gap:6px}
+  .hero-r{height:clamp(290px,42vh,370px)}
+  .hero-model{height:calc(clamp(330px,48vh,430px) * var(--hero-zoom, 1));margin-top:-42px}
+  .h-hero{font-size:clamp(23px,7vw,30px)}
+  .hero-sub{font-size:10px;letter-spacing:.2em;margin-bottom:16px}
   .widgets{gap:8px}
-  .w-clock{width:112px;padding:11px}
-  .w-drop{padding:12px 13px}
-  .cd-n{font-size:17px}
+  .w-clock{width:106px;padding:10px}
+  .w-drop{padding:11px 12px;min-width:0}
+  .cd-n{font-size:16px}
   .cd-l{font-size:7px}
+  .btn-lg{padding:12px 20px;font-size:10px}
   .lbox{padding:4vh 4vw}
 }
