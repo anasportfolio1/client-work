@@ -338,13 +338,40 @@
   :root{--head-h:66px}
   .nav{display:none}
   .hdr-in{grid-template-columns:auto 1fr auto}
-  .hero-grid{grid-template-columns:1fr;gap:22px}
-  .hero-r{
-    min-height:clamp(260px,42vh,360px);order:-1;
-    margin:calc((var(--head-h) + 18px) * -1) calc(var(--gutter) * -1) 0;
-    border-radius:0 0 var(--r-xl) var(--r-xl);
+  /* --- MOBILE HERO ---------------------------------------------------
+     Stacked, in reading order:
+       clock + next drop  ->  heading  ->  sub  ->  CTA  ->  dots  ->  model
+     The model is in normal flow here rather than absolutely positioned;
+     the desktop offsets are tuned to a two-column layout and make no
+     sense once everything is one column. */
+  .hero{min-height:0;overflow:visible}
+  .hero-grid{
+    grid-template-columns:1fr;gap:20px;
+    padding:calc(var(--head-h) + 16px) var(--gutter) 0;
   }
-  .hero::after{height:22%}
+  .hero-l{gap:22px;justify-content:flex-start}
+
+  .hero-r{
+    order:2;                       /* after the copy, never above it */
+    margin:2px calc(var(--gutter) * -1) 0;
+    min-height:0;
+    height:clamp(360px,52vh,500px);
+    display:flex;align-items:flex-start;justify-content:center;
+    overflow:hidden;
+  }
+  .hero-model{
+    position:relative;top:auto;left:auto;bottom:auto;
+    /* absorbs the empty space the cut-out carries above the head */
+    margin-top:-68px;
+    width:auto;max-width:none;
+    height:calc(clamp(450px,68vh,640px) * var(--hero-zoom, 1));
+    object-fit:contain;object-position:top center;
+    -webkit-mask-image:linear-gradient(180deg,#000 56%,rgba(0,0,0,.5) 76%,transparent 93%);
+            mask-image:linear-gradient(180deg,#000 56%,rgba(0,0,0,.5) 76%,transparent 93%);
+  }
+
+  /* the wash reaches less far up when the hero is shorter */
+  .sect-soft::before{inset:-70px calc(var(--gutter) * -1) -40px}
   .pdp{grid-template-columns:70px minmax(0,1fr);}
   .pdp-info{grid-column:1/-1}
   .acct{grid-template-columns:170px minmax(0,1fr)}
@@ -390,6 +417,14 @@
   .ftr-b .ftr-grid > :first-child{grid-column:1/-1}
   .quote{min-height:150px}
   .art-nav a span{display:none}
-  .hero{min-height:auto;padding-bottom:10px}
+  .hero{min-height:auto}
+  /* phone: keep the model generous but let the widgets breathe */
+  .hero-r{height:clamp(330px,48vh,430px)}
+  .hero-model{height:calc(clamp(410px,62vh,560px) * var(--hero-zoom, 1));margin-top:-56px}
+  .widgets{gap:8px}
+  .w-clock{width:112px;padding:11px}
+  .w-drop{padding:12px 13px}
+  .cd-n{font-size:17px}
+  .cd-l{font-size:7px}
   .lbox{padding:4vh 4vw}
 }
