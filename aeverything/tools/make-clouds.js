@@ -8,7 +8,7 @@ const zlib = require('zlib');
 const fs = require('fs');
 const path = require('path');
 
-const W = 1024, H = 640;
+const W = 1800, H = 1010;
 
 /* --- seeded RNG so the tile is reproducible --- */
 let seed = 1337;
@@ -37,6 +37,7 @@ const octs = [
   { f: octave(8),  amp: 0.17 },
   { f: octave(16), amp: 0.09 },
   { f: octave(32), amp: 0.06 },
+  { f: octave(64), amp: 0.035 },
 ];
 
 const px = Buffer.alloc(W * H * 4);
@@ -53,7 +54,7 @@ for (let y = 0; y < H; y++) {
     // broad ramp: most of the tile carries cloud, so the sky never reads as flat blue
     let a = ( n - 0.33 ) * 2.5;
     a = a < 0 ? 0 : a > 1 ? 1 : a;
-    a = a * a * (3 - 2 * a);      // soften the edges
+    a = a * a * ( 3 - 2 * a ) * 0.35 + a * 0.65;  // only lightly soften the edges
     a = Math.pow( a, 1.08 );      // slight sharpen, keeps the cores bright
     const i = (y * W + x) * 4;
     px[i] = 255; px[i + 1] = 255; px[i + 2] = 255;    // white cloud

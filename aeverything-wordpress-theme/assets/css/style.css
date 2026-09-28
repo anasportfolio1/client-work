@@ -94,7 +94,7 @@ table{border-collapse:collapse;width:100%}
    the way up, so the sky never falls back to flat blue behind the nav. */
 .sky::before{
   background-image:var(--cloud-noise);
-  background-size:1700px 950px;
+  background-size:1800px 1010px;
   background-repeat:repeat;
   opacity:.74;
   -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.55) 0%,#000 18%,#000 88%,rgba(0,0,0,.4) 96%,transparent 100%);
