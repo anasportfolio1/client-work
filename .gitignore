@@ -1,0 +1,10 @@
+# Client reference mockups — keep these out of the public repo
+*.jpeg
+*.jpg
+*.webp
+WhatsApp*
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
