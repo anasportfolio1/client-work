@@ -86,12 +86,10 @@ table{border-collapse:collapse;width:100%}
 .sky::after{
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:
-    /* sun, upper left */
-    radial-gradient(26% 24% at 3% -3%,
-      rgba(255,255,255,.5) 0%, rgba(255,255,255,.2) 22%, transparent 66%),
+    /* No painted sun — the photograph has a real one. */
     /* bright haze along the bottom, into the footer */
-    radial-gradient(170% 22% at 50% 100%,
-      rgba(255,255,255,.82) 0%, rgba(226,241,255,.3) 34%, transparent 66%),
+    radial-gradient(170% 20% at 50% 100%,
+      rgba(255,255,255,.78) 0%, rgba(226,241,255,.26) 36%, transparent 68%),
     /* brand blue — heavy at the top so white nav and headline stay readable */
     linear-gradient(180deg,
       rgba(6,34,86,.62) 0%, rgba(11,58,138,.44) 14%, rgba(20,91,190,.26) 32%,
@@ -116,15 +114,15 @@ table{border-collapse:collapse;width:100%}
 h1,h2,h3,h4,h5{
   font-family:var(--f-display);
   font-variation-settings:"wdth" 112;
-  font-weight:700;line-height:1.02;text-transform:uppercase;
+  font-weight:800;line-height:1.02;text-transform:uppercase;
 }
-.h-hero{font-size:clamp(34px,5.1vw,68px);letter-spacing:-.012em;line-height:.94;font-variation-settings:"wdth" 118;text-shadow:0 2px 22px rgba(6,32,76,.38)}
-.h-page{font-size:clamp(30px,3.9vw,54px);line-height:.96;font-variation-settings:"wdth" 118;text-shadow:0 2px 18px rgba(6,32,76,.34)}
-.h-sec {font-size:clamp(17px,1.4vw,22px);letter-spacing:.07em}
-.h-card{font-size:clamp(12.5px,.92vw,14.5px);letter-spacing:.10em}
+.h-hero{font-size:clamp(34px,5.1vw,68px);letter-spacing:-.016em;line-height:.92;font-weight:800;font-variation-settings:"wdth" 122;text-shadow:0 2px 22px rgba(6,32,76,.38)}
+.h-page{font-size:clamp(30px,3.9vw,54px);line-height:.94;font-weight:800;font-variation-settings:"wdth" 122;text-shadow:0 2px 18px rgba(6,32,76,.34)}
+.h-sec {font-size:clamp(17px,1.4vw,22px);letter-spacing:.07em;font-weight:800;font-variation-settings:"wdth" 116}
+.h-card{font-size:clamp(12.5px,.92vw,14.5px);letter-spacing:.10em;font-weight:800}
 .eyebrow{
   font-family:var(--f-display);font-variation-settings:"wdth" 104;
-  font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.22em;
+  font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.22em;
   color:var(--pink-300);display:block;
 }
 .lede{font-size:clamp(13.5px,1.02vw,16.5px);line-height:1.58;color:rgba(255,255,255,.86);font-weight:300}
@@ -139,7 +137,7 @@ h1,h2,h3,h4,h5{
   padding:13px 26px;border-radius:var(--r-pill);
   background:var(--bg);color:#fff;
   font-family:var(--f-display);font-variation-settings:"wdth" 102;
-  font-size:11px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;
+  font-size:11px;font-weight:800;letter-spacing:.17em;text-transform:uppercase;
   box-shadow:var(--sh-pink);white-space:nowrap;
   transition:transform .3s var(--e),box-shadow .3s var(--e),filter .3s var(--e);
 }

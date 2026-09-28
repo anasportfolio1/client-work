@@ -2,15 +2,10 @@
 
 ## assets/img/sky.webp — the site background
 
-- **Source:** Unsplash — https://unsplash.com/photos/white-clouds-and-blue-sky-during-daytime-ua2IF9HNaXs
-- **Licence:** Unsplash Licence
-- **Commercial use:** allowed
-- **Attribution:** not required
-- **Modifications:** resized to 2400px wide, converted to WebP at quality 80
+Supplied by the client. Cropped 9% from the left and 7% from the top so the
+sun sits further into the corner, its glare knocked back ~22% in the
+top-left quadrant so the nav and headline keep their contrast, resized to
+2400px wide and saved as WebP at quality 82.
 
-The Unsplash Licence grants an irrevocable, worldwide, non-exclusive right to
-use the photo free of charge, including commercially, without permission or
-attribution. It does not permit compiling photos to build a competing service.
-
-Everything else in the theme — icons, garment illustrations, the æ mark — is
-original work drawn as inline SVG.
+Everything else in the theme — icons, garment illustrations, the æ mark —
+is original work drawn as inline SVG.

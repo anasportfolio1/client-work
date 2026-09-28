@@ -43,7 +43,7 @@
 
 .logo{
   font-family:var(--f-display);font-variation-settings:"wdth" 96;
-  font-size:clamp(19px,1.65vw,25px);font-weight:600;letter-spacing:-.018em;
+  font-size:clamp(19px,1.65vw,25px);font-weight:700;letter-spacing:-.02em;
   color:#fff;line-height:1;text-transform:lowercase;
   transition:opacity .26s var(--e);
 }
@@ -53,7 +53,7 @@
 .nav a{
   position:relative;padding:8px 2px;
   font-family:var(--f-display);font-variation-settings:"wdth" 100;
-  font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
   color:rgba(255,255,255,.88);white-space:nowrap;transition:color .26s var(--e);
 }
 .nav a::after{
@@ -152,15 +152,8 @@
   margin-top:calc(var(--head-h) * -1);
 }
 /* bright cloud bank along the bottom of every hero */
-.hero::after{
-  content:"";position:absolute;left:0;right:0;bottom:-1px;height:30%;z-index:2;pointer-events:none;
-  background:
-    radial-gradient(40% 70% at 10% 124%, rgba(255,255,255,.72), transparent 66%),
-    radial-gradient(34% 60% at 34% 132%, rgba(255,255,255,.58), transparent 66%),
-    radial-gradient(42% 74% at 62% 126%, rgba(255,255,255,.68), transparent 66%),
-    radial-gradient(32% 58% at 89% 134%, rgba(255,255,255,.54), transparent 66%);
-  filter:blur(2px);
-}
+/* No band at the foot of the hero. The sky photo runs straight through to
+   the next section — anything painted here reads as a seam between them. */
 .hero-grid{
   width:100%;max-width:var(--wrap);margin-inline:auto;
   padding:calc(var(--head-h) + 18px) var(--gutter) 40px;
@@ -180,16 +173,18 @@
   margin:calc((var(--head-h) + 18px) * -1) calc(var(--gutter) * -1) -40px 0;
   border-radius:0 0 0 var(--r-xl);
 }
+/* Only darken the top, so the nav stays readable over the image.
+   Nothing at the bottom — a light edge there reads as a seam. */
 .hero-r::after{
   content:"";position:absolute;inset:0;z-index:6;pointer-events:none;
-  background:linear-gradient(180deg,rgba(8,30,70,.34) 0%,transparent 24%,transparent 72%,rgba(224,240,255,.26) 100%);
+  background:linear-gradient(180deg,rgba(8,30,70,.34) 0%,transparent 26%);
 }
 
 /* widget stack */
 .widgets{display:flex;gap:14px;flex-wrap:wrap}
 .w-clock{
   width:152px;padding:16px;border-radius:var(--r-md);
-  background:rgba(255,255,255,.13);border:1px solid var(--glass-brd-soft);
+  background:rgba(10,36,82,.42);border:1px solid rgba(255,255,255,.22);
   backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);
   box-shadow:var(--sh);
 }
@@ -199,18 +194,18 @@
 .clock-h{stroke-width:3.4}
 .clock-m{stroke-width:2.4}
 .clock-s{stroke:var(--pink-400);stroke-width:1.4}
-.clock-t{font-family:var(--f-display);font-variation-settings:"wdth" 108;font-size:22px;font-weight:700;line-height:1;letter-spacing:.01em}
+.clock-t{font-family:var(--f-display);font-variation-settings:"wdth" 110;font-size:22px;font-weight:800;line-height:1;letter-spacing:.01em}
 .clock-ap{font-size:10px;font-weight:700;letter-spacing:.18em;color:var(--pink-400);margin-top:3px}
 
 .w-drop{
   flex:1;min-width:238px;max-width:300px;padding:16px 18px;border-radius:var(--r-md);
-  background:rgba(255,255,255,.13);border:1px solid var(--glass-brd-soft);
+  background:rgba(10,36,82,.42);border:1px solid rgba(255,255,255,.22);
   backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);
   box-shadow:var(--sh);display:flex;flex-direction:column;gap:11px;
 }
 .cdown{display:flex;align-items:flex-start;gap:4px}
 .cd-u{flex:1;text-align:center}
-.cd-n{font-family:var(--f-display);font-variation-settings:"wdth" 112;font-size:clamp(20px,1.9vw,27px);font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.cd-n{font-family:var(--f-display);font-variation-settings:"wdth" 112;font-size:clamp(20px,1.9vw,27px);font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
 .cd-l{font-size:8px;font-weight:700;letter-spacing:.13em;color:rgba(255,255,255,.62);margin-top:5px}
 .cd-s{font-family:var(--f-display);font-size:clamp(18px,1.7vw,24px);font-weight:400;opacity:.4;line-height:1;padding-top:1px}
 .drop-meta{font-size:11px;letter-spacing:.06em;line-height:1.5;color:rgba(255,255,255,.8);border-top:1px solid rgba(255,255,255,.16);padding-top:10px}
@@ -248,7 +243,7 @@
     linear-gradient(180deg, rgba(30,86,170,.14), transparent 55%);
 }
 .ph::after{
-  content:"";position:absolute;inset:0;z-index:2;opacity:.16;
+  content:"";position:absolute;inset:0;z-index:2;opacity:.07;
   background-image:var(--sky-photo);background-size:520px 340px;mix-blend-mode:overlay;
 }
 .ph-lb{
