@@ -96,7 +96,7 @@ $ae_first = $ae_slides[0];
 	</script>
 </section>
 
-<section class="sect-b">
+<section class="sect-b sect-soft">
 	<div class="wrap">
 		<div class="sec-head rv">
 			<h2 class="h-sec"><?php echo esc_html( ae_opt( 'ae_worlds_title', 'Shop by World' ) ); ?></h2>

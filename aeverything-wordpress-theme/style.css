@@ -142,6 +142,35 @@ Tags: e-commerce, custom-colors, custom-menu, custom-logo, featured-images, tran
   .has-cursor-light *::before{display:none}
 }
 
+/* ============================================================
+   SOFT SECTION — a wash that fades out on all four sides.
+   The hero cut-out dissolves into the top of this, then the
+   products appear out of it. No hard edge anywhere.
+   ============================================================ */
+.sect-soft{position:relative;isolation:isolate}
+.sect-soft::before{
+  content:"";position:absolute;z-index:-1;pointer-events:none;
+  /* reach past the section so the fade starts inside the hero above */
+  inset:-140px calc(var(--gutter) * -1) -60px;
+  background:
+    linear-gradient(180deg,
+      rgba(214,235,255,.0) 0%,
+      rgba(206,231,255,.34) 26%,
+      rgba(198,227,255,.46) 52%,
+      rgba(206,231,255,.34) 78%,
+      rgba(214,235,255,0) 100%);
+  /* 20% fade on every side — vertical and horizontal masks intersected */
+  -webkit-mask-image:
+    linear-gradient(180deg,transparent 0%,#000 20%,#000 80%,transparent 100%),
+    linear-gradient(90deg,transparent 0%,#000 20%,#000 80%,transparent 100%);
+  -webkit-mask-composite:source-in;
+          mask-image:
+    linear-gradient(180deg,transparent 0%,#000 20%,#000 80%,transparent 100%),
+    linear-gradient(90deg,transparent 0%,#000 20%,#000 80%,transparent 100%);
+          mask-composite:intersect;
+  backdrop-filter:blur(2px);
+}
+
 /* ---------- AI VIDEO PACKAGES ---------- */
 .pkg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.2vw,16px)}
 .pkg{

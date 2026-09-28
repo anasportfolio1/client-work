@@ -150,10 +150,9 @@
 .hero{
   position:relative;min-height:clamp(560px,86vh,790px);display:flex;align-items:stretch;
   margin-top:calc(var(--head-h) * -1);
-  /* The cut-out is deliberately larger than the hero and gets cropped by
-     this edge — it reads as a section that the next one cuts into, not as
-     a picture floating inside a box. */
-  overflow:hidden;
+  /* Horizontal overflow only. The cut-out fades out with a mask before it
+     reaches the bottom, so there is no hard cut line to hide. */
+  overflow-x:clip;
 }
 /* bright cloud bank along the bottom of every hero */
 /* No band at the foot of the hero. The sky photo runs straight through to
@@ -194,15 +193,23 @@
    client can re-frame any cut-out they upload without touching code. */
 .hero-model{
   position:absolute;
-  /* Anchored from the TOP so the head always clears the nav and it is the
-     legs that run off the bottom edge. Anchoring from the bottom crops the
-     head instead, which is the wrong end. */
-  top:calc(var(--head-h) + 10px - (var(--hero-y, 0) * 4px));
+  /* Anchored from the TOP, head sitting up level with the nav. Anchoring
+     from the bottom crops the head instead, which is the wrong end. */
+  /* Negative offset because the supplied cut-out carries ~120px of empty
+     space above the head; this lifts the actual head up to nav level. */
+  top:calc(-80px - (var(--hero-y, 0) * 4px));
   left:calc(var(--hero-x, 0) * 1%);
   width:auto;max-width:none;
-  height:calc(clamp(620px, 112vh, 1080px) * var(--hero-zoom, 1));
+  height:calc(clamp(720px, 132vh, 1280px) * var(--hero-zoom, 1));
   object-fit:contain;object-position:top left;
   filter:drop-shadow(0 26px 46px rgba(6,26,62,.3));
+
+  /* She dissolves into the sky rather than being sliced. The fade is
+     complete just above the hero's edge, so no cut line is ever visible
+     and she disappears into the soft wash the products sit on. */
+  -webkit-mask-image:linear-gradient(180deg,#000 44%,rgba(0,0,0,.55) 58%,rgba(0,0,0,.15) 66%,transparent 72%);
+          mask-image:linear-gradient(180deg,#000 44%,rgba(0,0,0,.55) 58%,rgba(0,0,0,.15) 66%,transparent 72%);
+
   opacity:0;transform:translateY(18px) scale(.985);
   transition:opacity .55s var(--e),transform .65s var(--e);
   will-change:opacity,transform;
