@@ -7,10 +7,10 @@
   <div class="hero-grid">
     <div class="hero-l">
       {{widgets}}
-      <div class="hero-copy rv">
-        <h1 class="h-hero">I am nothing,<br>&aelig;verything.</h1>
-        <p class="hero-sub">Mind / Body / Spirit / Art</p>
-        <a href="shop.html" class="btn btn-lg">Shop the Collection</a>
+      <div class="hero-copy rv" id="heroCopy">
+        <h1 class="h-hero" id="heroTitle"><span>I am nothing,</span><br><span>&aelig;verything.</span></h1>
+        <p class="hero-sub" id="heroSub">Mind / Body / Spirit / Art</p>
+        <a href="shop.html" class="btn btn-lg" id="heroBtn">Shop the Collection</a>
       </div>
       <div class="dots" id="hero-dots">
         <button class="dot is-on" aria-label="Slide 1"></button>
@@ -21,21 +21,20 @@
     </div>
 
     <div class="hero-r" id="hero-car">
-      <div data-slide style="position:absolute;inset:0;transition:opacity .9s var(--e),transform 1.4s var(--e)">
-        <div class="ph" style="--h:338;position:absolute;inset:0"><span class="ph-lb">Hero 1 &mdash; Model in Bubble Gum set</span></div>
-      </div>
-      <div data-slide style="position:absolute;inset:0;opacity:0;transition:opacity .9s var(--e),transform 1.4s var(--e)">
-        <div class="ph" style="--h:206;position:absolute;inset:0"><span class="ph-lb">Hero 2 &mdash; &AElig;D01 drop campaign</span></div>
-      </div>
-      <div data-slide style="position:absolute;inset:0;opacity:0;transition:opacity .9s var(--e),transform 1.4s var(--e)">
-        <div class="ph" style="--h:20;position:absolute;inset:0"><span class="ph-lb">Hero 3 &mdash; Sculpture / art world</span></div>
-      </div>
-      <div data-slide style="position:absolute;inset:0;opacity:0;transition:opacity .9s var(--e),transform 1.4s var(--e)">
-        <div class="ph" style="--h:300;position:absolute;inset:0"><span class="ph-lb">Hero 4 &mdash; Menswear</span></div>
-      </div>
-      <a href="world.html" class="ae-badge" aria-label="World of Æ">&aelig;</a>
+      <img class="hero-model in" id="heroModel" src="assets/img/model-1.webp" alt="" fetchpriority="high" decoding="async">
     </div>
+
+    <a href="world.html" class="ae-badge" aria-label="World of Æ">&aelig;</a>
   </div>
+
+  <script type="application/json" id="heroSlides">
+  [
+    {"l1":"I am nothing,","l2":"&aelig;verything.","sub":"Mind / Body / Spirit / Art","btn":"Shop the Collection","url":"shop.html","img":"assets/img/model-1.webp"},
+    {"l1":"Mentorship","l2":"","sub":"Guidance. Accountability. Transformation.","btn":"Apply for Mentorship","url":"mentorship.html","img":"assets/img/model-1.webp"},
+    {"l1":"&AElig;verything","l2":"Fitness","sub":"Train the body. Strengthen the mind.","btn":"Explore Programs","url":"fitness.html","img":"assets/img/model-1.webp"},
+    {"l1":"AI Marketing","l2":"Videos","sub":"Send us your product. We build your videos.","btn":"Start Your Brief","url":"#","img":"assets/img/model-1.webp"}
+  ]
+  </script>
 </section>
 
 <section class="sect-b">

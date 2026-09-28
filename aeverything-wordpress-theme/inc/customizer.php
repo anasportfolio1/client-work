@@ -92,16 +92,19 @@ function ae_customize_register( $wp ) {
 		'title' => __( 'Home — Hero', 'aeverything' ),
 		'panel' => 'ae_panel',
 	) );
-	ae_add( $wp, 'ae_hero_line1', __( 'Headline line 1', 'aeverything' ), 'ae_hero', 'text', 'I am nothing,' );
-	ae_add( $wp, 'ae_hero_line2', __( 'Headline line 2', 'aeverything' ), 'ae_hero', 'text', 'æverything.' );
-	ae_add( $wp, 'ae_hero_sub', __( 'Sub-line', 'aeverything' ), 'ae_hero', 'text', 'Mind / Body / Spirit / Art' );
-	ae_add( $wp, 'ae_hero_btn', __( 'Button text', 'aeverything' ), 'ae_hero', 'text', 'Shop the Collection' );
-	ae_add( $wp, 'ae_hero_btn_url', __( 'Button link', 'aeverything' ), 'ae_hero', 'url', '' );
+	/* Each slide carries its own headline, sub-line, button and cut-out —
+	   so the hero tells a different story as it rotates, the way the
+	   separate pages do in the design. */
+	$ae_slide_defaults = ae_hero_defaults();
 
-	for ( $i = 1; $i <= 4; $i++ ) {
-		ae_add( $wp, "ae_hero_img_$i", sprintf( __( 'Slide %d image', 'aeverything' ), $i ), 'ae_hero', 'image', '' );
-		ae_add( $wp, "ae_hero_cap_$i", sprintf( __( 'Slide %d caption (shown only while empty)', 'aeverything' ), $i ),
-			'ae_hero', 'text', '' );
+	foreach ( $ae_slide_defaults as $i => $d ) {
+		ae_add( $wp, "ae_hero_line1_$i", sprintf( __( 'Slide %d — headline line 1', 'aeverything' ), $i ), 'ae_hero', 'text', $d[0] );
+		ae_add( $wp, "ae_hero_line2_$i", sprintf( __( 'Slide %d — headline line 2', 'aeverything' ), $i ), 'ae_hero', 'text', $d[1] );
+		ae_add( $wp, "ae_hero_sub_$i",   sprintf( __( 'Slide %d — sub-line', 'aeverything' ), $i ),        'ae_hero', 'text', $d[2] );
+		ae_add( $wp, "ae_hero_btn_$i",   sprintf( __( 'Slide %d — button text', 'aeverything' ), $i ),     'ae_hero', 'text', $d[3] );
+		ae_add( $wp, "ae_hero_url_$i",   sprintf( __( 'Slide %d — button link', 'aeverything' ), $i ),     'ae_hero', 'url', '' );
+		ae_add( $wp, "ae_hero_img_$i",   sprintf( __( 'Slide %d — cut-out image', 'aeverything' ), $i ),   'ae_hero', 'image', '',
+			__( 'A model photo with the background removed (PNG or WebP with transparency).', 'aeverything' ) );
 	}
 
 	/* ---- Drop countdown --------------------------------------------- */

@@ -1,11 +1,14 @@
 # Image credits
 
-## assets/img/sky.webp — the site background
+Both images were supplied by the client.
 
-Supplied by the client. Cropped 9% from the left and 7% from the top so the
-sun sits further into the corner, its glare knocked back ~22% in the
-top-left quadrant so the nav and headline keep their contrast, resized to
-2400px wide and saved as WebP at quality 82.
+## assets/img/sky.webp — site background
+Cropped 2% from the left and top, glare in the top-left knocked back ~12%
+so the nav and headline keep their contrast. 2400px wide, WebP q82.
+
+## assets/img/model-1.webp — hero cut-out
+Background already removed by the client. Resized to 1600px tall, WebP q86
+with the alpha channel preserved.
 
 Everything else in the theme — icons, garment illustrations, the æ mark —
 is original work drawn as inline SVG.

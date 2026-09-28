@@ -1,6 +1,9 @@
 <?php
 /**
- * Front page — hero carousel, drop countdown, Shop by World.
+ * Front page — rotating hero, drop countdown, Shop by World.
+ *
+ * Every slide carries its own headline, sub-line, button and cut-out, so
+ * the copy changes with the image rather than staying fixed.
  *
  * @package Aeverything
  */
@@ -11,21 +14,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
-/* Hero slides — only the ones with an image, unless none are set yet,
-   in which case all four render as placeholders so the carousel works. */
-$ae_hues   = array( 338, 206, 20, 300 );
+/* Fall back to the bundled cut-out when the client hasn't uploaded one. */
+$ae_fallback = AE_URI . '/assets/img/model-1.webp';
+
 $ae_slides = array();
-for ( $i = 1; $i <= 4; $i++ ) {
+foreach ( ae_hero_defaults() as $i => $d ) {
+	$line1 = ae_opt( "ae_hero_line1_$i", $d[0] );
+	$line2 = ae_opt( "ae_hero_line2_$i", $d[1] );
+	if ( '' === $line1 && '' === $line2 ) {
+		continue;
+	}
+	$img_id  = ae_opt( "ae_hero_img_$i", '' );
+	$img_url = $img_id ? wp_get_attachment_image_url( (int) $img_id, 'full' ) : '';
 	$ae_slides[] = array(
-		'img'   => ae_opt( "ae_hero_img_$i", '' ),
-		'cap'   => ae_opt( "ae_hero_cap_$i", sprintf( __( 'Hero %d image', 'aeverything' ), $i ) ),
-		'hue'   => $ae_hues[ $i - 1 ],
+		'l1'  => $line1,
+		'l2'  => $line2,
+		'sub' => ae_opt( "ae_hero_sub_$i", $d[2] ),
+		'btn' => ae_opt( "ae_hero_btn_$i", $d[3] ),
+		'url' => ae_opt( "ae_hero_url_$i", '' ) ? ae_opt( "ae_hero_url_$i" ) : ae_shop_url(),
+		/* Until the client uploads a cut-out per slide, every slide reuses
+		   the one supplied — better than an empty right-hand column. */
+		'img' => $img_url ? $img_url : $ae_fallback,
 	);
 }
-$ae_with_img = array_filter( $ae_slides, fn( $s ) => ! empty( $s['img'] ) );
-if ( $ae_with_img ) {
-	$ae_slides = array_values( $ae_with_img );
+if ( ! $ae_slides ) {
+	$ae_slides[] = array(
+		'l1' => 'I am nothing,', 'l2' => 'æverything.',
+		'sub' => 'Mind / Body / Spirit / Art',
+		'btn' => 'Shop the Collection', 'url' => ae_shop_url(),
+		'img' => $ae_fallback,
+	);
 }
+$ae_first = $ae_slides[0];
 ?>
 
 <section class="hero">
@@ -34,14 +54,14 @@ if ( $ae_with_img ) {
 		<div class="hero-l">
 			<?php get_template_part( 'template-parts/widgets' ); ?>
 
-			<div class="hero-copy rv">
-				<h1 class="h-hero">
-					<?php echo esc_html( ae_opt( 'ae_hero_line1', 'I am nothing,' ) ); ?><br>
-					<?php echo esc_html( ae_opt( 'ae_hero_line2', 'æverything.' ) ); ?>
+			<div class="hero-copy rv" id="heroCopy">
+				<h1 class="h-hero" id="heroTitle">
+					<span><?php echo esc_html( $ae_first['l1'] ); ?></span>
+					<?php if ( $ae_first['l2'] ) : ?><br><span><?php echo esc_html( $ae_first['l2'] ); ?></span><?php endif; ?>
 				</h1>
-				<p class="hero-sub"><?php echo esc_html( ae_opt( 'ae_hero_sub', 'Mind / Body / Spirit / Art' ) ); ?></p>
-				<a href="<?php echo esc_url( ae_opt( 'ae_hero_btn_url' ) ? ae_opt( 'ae_hero_btn_url' ) : ae_shop_url() ); ?>" class="btn btn-lg">
-					<?php echo esc_html( ae_opt( 'ae_hero_btn', 'Shop the Collection' ) ); ?>
+				<p class="hero-sub" id="heroSub"><?php echo esc_html( $ae_first['sub'] ); ?></p>
+				<a href="<?php echo esc_url( $ae_first['url'] ); ?>" class="btn btn-lg" id="heroBtn">
+					<?php echo esc_html( $ae_first['btn'] ); ?>
 				</a>
 			</div>
 
@@ -58,16 +78,22 @@ if ( $ae_with_img ) {
 		</div>
 
 		<div class="hero-r" id="hero-car">
-			<?php foreach ( $ae_slides as $i => $s ) : ?>
-				<div data-slide style="position:absolute;inset:0;<?php echo 0 === $i ? '' : 'opacity:0;'; ?>transition:opacity .9s var(--e),transform 1.4s var(--e)">
-					<?php ae_media( $s['img'], $s['cap'], $s['hue'], 'ae-hero', 'ae-slide' ); ?>
-				</div>
-			<?php endforeach; ?>
-
-			<a href="<?php echo esc_url( home_url( '/world-of-ae/' ) ); ?>" class="ae-badge" aria-label="<?php esc_attr_e( 'World of Æ', 'aeverything' ); ?>">&aelig;</a>
+			<?php if ( $ae_first['img'] ) : ?>
+				<img class="hero-model" id="heroModel"
+					src="<?php echo esc_url( $ae_first['img'] ); ?>"
+					alt="" fetchpriority="high" decoding="async">
+			<?php else : ?>
+				<?php ae_media( '', __( 'Hero cut-out', 'aeverything' ), 338, 'ae-hero' ); ?>
+			<?php endif; ?>
 		</div>
 
+		<a href="<?php echo esc_url( home_url( '/world-of-ae/' ) ); ?>" class="ae-badge"
+			aria-label="<?php esc_attr_e( 'World of Æ', 'aeverything' ); ?>">&aelig;</a>
 	</div>
+
+	<script type="application/json" id="heroSlides">
+		<?php echo wp_json_encode( $ae_slides ); ?>
+	</script>
 </section>
 
 <section class="sect-b">
@@ -98,7 +124,6 @@ if ( $ae_with_img ) {
 </section>
 
 <?php
-/* Latest products, if WooCommerce has any. */
 if ( ae_wc_active() ) :
 	$ae_products = new WP_Query( array(
 		'post_type'           => 'product',

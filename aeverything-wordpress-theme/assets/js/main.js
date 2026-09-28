@@ -83,23 +83,65 @@
     setInterval(tick, 1000);
   }
 
-  /* ---------- 5. HERO CAROUSEL ---------- */
-  const car = $('#hero-car');
-  if (car) {
-    const slides = $$('[data-slide]', car);
-    const dots   = $$('#hero-dots .dot');
-    let i = 0, timer;
-    const go = n => {
-      i = (n + slides.length) % slides.length;
-      slides.forEach((s, k) => {
-        s.style.opacity = k === i ? '1' : '0';
-        s.style.transform = k === i ? 'scale(1)' : 'scale(1.05)';
-      });
-      dots.forEach((d, k) => d.classList.toggle('is-on', k === i));
-    };
-    const play = () => { clearInterval(timer); timer = setInterval(() => go(i + 1), 5200); };
-    dots.forEach((d, k) => on(d, 'click', () => { go(k); play(); }));
-    go(0); play();
+  /* ---------- 5. HERO CAROUSEL ----------
+     The headline, sub-line, button and cut-out all change together, so
+     each slide reads as a different part of the brand. */
+  const heroData = $('#heroSlides');
+  if (heroData) {
+    let slides = [];
+    try { slides = JSON.parse(heroData.textContent) || []; } catch (e) { slides = []; }
+
+    const title = $('#heroTitle'), sub = $('#heroSub'),
+          btn   = $('#heroBtn'),   model = $('#heroModel'),
+          copy  = $('#heroCopy');
+    const dots = $$('#hero-dots .dot');
+
+    if (slides.length && title) {
+      let i = 0, timer;
+
+      const paint = s => {
+        title.innerHTML = '<span></span>' + (s.l2 ? '<br><span></span>' : '');
+        const spans = title.querySelectorAll('span');
+        spans[0].textContent = s.l1;
+        if (spans[1]) spans[1].textContent = s.l2;
+        if (sub) sub.textContent = s.sub || '';
+        if (btn) { btn.textContent = s.btn || ''; btn.href = s.url || '#'; }
+        if (model && s.img) {
+          model.classList.remove('in');
+          const pre = new Image();
+          pre.onload = () => { model.src = s.img; requestAnimationFrame(() => model.classList.add('in')); };
+          pre.src = s.img;
+        }
+      };
+
+      const go = n => {
+        i = (n + slides.length) % slides.length;
+        if (copy) {
+          copy.style.opacity = '0';
+          copy.style.transform = 'translateY(10px)';
+          setTimeout(() => {
+            paint(slides[i]);
+            copy.style.opacity = '1';
+            copy.style.transform = 'none';
+          }, 280);
+        } else {
+          paint(slides[i]);
+        }
+        dots.forEach((d, k) => d.classList.toggle('is-on', k === i));
+      };
+
+      if (copy) copy.style.transition = 'opacity .45s var(--e), transform .55s var(--e)';
+      if (model) requestAnimationFrame(() => model.classList.add('in'));
+
+      const play = () => { clearInterval(timer); timer = setInterval(() => go(i + 1), 6000); };
+      dots.forEach((d, k) => on(d, 'click', () => { go(k); play(); }));
+
+      const hero = $('.hero');
+      on(hero, 'mouseenter', () => clearInterval(timer));
+      on(hero, 'mouseleave', play);
+
+      if (slides.length > 1) play();
+    }
   }
 
   /* ---------- 6. FILTER PILLS ---------- */
@@ -219,7 +261,46 @@
     f.innerHTML = '<p style="padding:14px 20px;font-size:13.5px;font-weight:600;color:inherit">Welcome to the movement. ✓</p>';
   }));
 
-  /* ---------- 15. MARK ACTIVE NAV ---------- */
+  /* ---------- 15. LIVE FEEL ---------- */
+
+  /* Light follows the cursor across cards and glass panels. */
+  const lit = $$('.pcard, .icard, .acard, .edu-card, .wcard, .tile, .dtile, .glass, .glass-dark, .w-clock, .w-drop');
+  if (lit.length && window.matchMedia('(hover:hover)').matches) {
+    lit.forEach(el => {
+      on(el, 'pointermove', e => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+        el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+      });
+    });
+    document.body.classList.add('has-cursor-light');
+  }
+
+  /* Countdown seconds tick visibly. */
+  const cdS = $('#cdS');
+  if (cdS) {
+    let last = cdS.textContent;
+    setInterval(() => {
+      if (cdS.textContent !== last) {
+        last = cdS.textContent;
+        cdS.classList.add('tick');
+        setTimeout(() => cdS.classList.remove('tick'), 220);
+      }
+    }, 200);
+  }
+
+  /* Parallax drift on the hero cut-out. */
+  const hm = $('#heroModel');
+  if (hm && window.matchMedia('(hover:hover)').matches && !window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    on(document, 'pointermove', e => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 12;
+      const y = (e.clientY / window.innerHeight - 0.5) * 8;
+      hm.style.setProperty('--px', x.toFixed(2) + 'px');
+      hm.style.setProperty('--py', y.toFixed(2) + 'px');
+    });
+  }
+
+  /* ---------- 16. MARK ACTIVE NAV ---------- */
   const here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   $$('.nav a, .mnav a').forEach(a => {
     const href = (a.getAttribute('href') || '').toLowerCase();

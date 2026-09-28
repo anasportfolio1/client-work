@@ -42,8 +42,8 @@
 .burger span::after{top:5.5px}
 
 .logo{
-  font-family:var(--f-display);font-variation-settings:"wdth" 96;
-  font-size:clamp(19px,1.65vw,25px);font-weight:700;letter-spacing:-.02em;
+  font-family:var(--f-display);font-variation-settings:"wdth" 94;
+  font-size:clamp(18px,1.5vw,23px);font-weight:700;letter-spacing:-.02em;
   color:#fff;line-height:1;text-transform:lowercase;
   transition:opacity .26s var(--e);
 }
@@ -168,23 +168,34 @@
   color:rgba(255,255,255,.8);margin-bottom:24px;
 }
 /* image column bleeds to the top-right corner, under the header */
+/* The model is a cut-out standing on the sky — no panel, no rounded box,
+   nothing that could sit over the nav. Bottom-aligned so she stands on the
+   fold, exactly as in the mockups. */
 .hero-r{
-  position:relative;z-index:3;overflow:hidden;min-height:340px;
-  margin:calc((var(--head-h) + 18px) * -1) calc(var(--gutter) * -1) -40px 0;
-  border-radius:0 0 0 var(--r-xl);
+  position:relative;z-index:3;min-height:340px;
+  margin:0 calc(var(--gutter) * -1) -40px 0;
+  display:flex;align-items:flex-end;justify-content:center;
+  pointer-events:none;
 }
-/* Only darken the top, so the nav stays readable over the image.
-   Nothing at the bottom — a light edge there reads as a seam. */
-.hero-r::after{
-  content:"";position:absolute;inset:0;z-index:6;pointer-events:none;
-  background:linear-gradient(180deg,rgba(8,30,70,.34) 0%,transparent 26%);
+.hero-model{
+  width:auto;max-width:100%;
+  height:clamp(440px,80vh,730px);
+  object-fit:contain;object-position:bottom center;
+  filter:drop-shadow(0 26px 46px rgba(6,26,62,.34));
+  opacity:0;transform:translateY(18px) scale(.985);
+  transition:opacity .8s var(--e),transform 1s var(--e);
+}
+.hero-model.in{opacity:1;transform:none}
+/* placeholder slots keep their panel look until a real cut-out is added */
+.hero-r > .ph{
+  position:absolute;inset:0;border-radius:0 0 0 var(--r-xl);overflow:hidden;
 }
 
 /* widget stack */
 .widgets{display:flex;gap:14px;flex-wrap:wrap}
 .w-clock{
   width:152px;padding:16px;border-radius:var(--r-md);
-  background:rgba(10,36,82,.42);border:1px solid rgba(255,255,255,.22);
+  background:rgba(9,32,74,.26);border:1px solid rgba(255,255,255,.26);
   backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);
   box-shadow:var(--sh);
 }
@@ -194,18 +205,18 @@
 .clock-h{stroke-width:3.4}
 .clock-m{stroke-width:2.4}
 .clock-s{stroke:var(--pink-400);stroke-width:1.4}
-.clock-t{font-family:var(--f-display);font-variation-settings:"wdth" 110;font-size:22px;font-weight:800;line-height:1;letter-spacing:.01em}
-.clock-ap{font-size:10px;font-weight:700;letter-spacing:.18em;color:var(--pink-400);margin-top:3px}
+.clock-t{font-family:var(--f-display);font-variation-settings:"wdth" 96;font-size:21px;font-weight:400;line-height:1;letter-spacing:.02em}
+.clock-ap{font-size:9px;font-weight:600;letter-spacing:.2em;color:var(--pink-400);margin-top:3px}
 
 .w-drop{
   flex:1;min-width:238px;max-width:300px;padding:16px 18px;border-radius:var(--r-md);
-  background:rgba(10,36,82,.42);border:1px solid rgba(255,255,255,.22);
+  background:rgba(9,32,74,.26);border:1px solid rgba(255,255,255,.26);
   backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);
   box-shadow:var(--sh);display:flex;flex-direction:column;gap:11px;
 }
 .cdown{display:flex;align-items:flex-start;gap:4px}
 .cd-u{flex:1;text-align:center}
-.cd-n{font-family:var(--f-display);font-variation-settings:"wdth" 112;font-size:clamp(20px,1.9vw,27px);font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.cd-n{font-family:var(--f-display);font-variation-settings:"wdth" 96;font-size:clamp(18px,1.55vw,23px);font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
 .cd-l{font-size:8px;font-weight:700;letter-spacing:.13em;color:rgba(255,255,255,.62);margin-top:5px}
 .cd-s{font-family:var(--f-display);font-size:clamp(18px,1.7vw,24px);font-weight:400;opacity:.4;line-height:1;padding-top:1px}
 .drop-meta{font-size:11px;letter-spacing:.06em;line-height:1.5;color:rgba(255,255,255,.8);border-top:1px solid rgba(255,255,255,.16);padding-top:10px}

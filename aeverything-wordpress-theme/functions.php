@@ -112,6 +112,22 @@ add_filter( 'wp_resource_hints', 'ae_resource_hints', 10, 2 );
  * 3. Helpers
  * ---------------------------------------------------------------------- */
 
+/**
+ * Hero slide defaults — the single source of truth, read by both the
+ * Customizer (to seed its controls) and front-page.php (to render).
+ * Keeping them in one place stops the two drifting apart.
+ *
+ * Order: line 1, line 2, sub-line, button label.
+ */
+function ae_hero_defaults() {
+	return array(
+		1 => array( 'I am nothing,', 'æverything.', 'Mind / Body / Spirit / Art',                  'Shop the Collection' ),
+		2 => array( 'Mentorship',    '',            'Guidance. Accountability. Transformation.',   'Apply for Mentorship' ),
+		3 => array( 'Æverything',    'Fitness',     'Train the body. Strengthen the mind.',        'Explore Programs' ),
+		4 => array( 'AI Marketing',  'Videos',      'Send us your product. We build your videos.', 'Start Your Brief' ),
+	);
+}
+
 /** Theme option with fallback. */
 function ae_opt( $key, $default = '' ) {
 	$v = get_theme_mod( $key, $default );
