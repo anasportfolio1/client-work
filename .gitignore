@@ -1,7 +1,11 @@
-# Client reference mockups — keep these out of the public repo
-*.jpeg
-*.jpg
-*.webp
+# Client reference mockups dropped at a project root — never the site's own
+# images, which live under assets/ and must be committed.
+/*.jpg
+/*.jpeg
+/*.webp
+/aeverything/*.jpg
+/aeverything/*.jpeg
+/aeverything/*.webp
 WhatsApp*
 
 # OS
