@@ -150,8 +150,10 @@
 .hero{
   position:relative;min-height:clamp(560px,86vh,790px);display:flex;align-items:stretch;
   margin-top:calc(var(--head-h) * -1);
-  /* above the sections that follow, so the cut-out is never clipped by them */
-  z-index:5;
+  /* The cut-out is deliberately larger than the hero and gets cropped by
+     this edge — it reads as a section that the next one cuts into, not as
+     a picture floating inside a box. */
+  overflow:hidden;
 }
 /* bright cloud bank along the bottom of every hero */
 /* No band at the foot of the hero. The sky photo runs straight through to
@@ -183,18 +185,24 @@
   margin-right:calc(var(--gutter) * -1);
   overflow:visible;pointer-events:none;
 }
-/* Absolutely positioned so the cut-out cannot drive the row height — a
-   percentage height on an auto-height parent goes circular and the
-   image's own 1600px wins, pushing the whole hero off screen.
-   max-height then keeps any cut-out the client uploads inside the hero,
-   whatever its proportions. */
+/* Zoomed well past the hero height so the legs run off the bottom edge.
+   Absolutely positioned so it cannot drive the row height — a percentage
+   height against an auto-height parent goes circular and the image's own
+   pixel height wins, which pushes the whole hero off screen.
+
+   --hero-zoom / --hero-x / --hero-y are set from the Customizer, so the
+   client can re-frame any cut-out they upload without touching code. */
 .hero-model{
-  position:absolute;bottom:0;left:0;
-  width:auto;max-width:100%;
-  height:clamp(440px,78vh,760px);
-  max-height:100%;
-  object-fit:contain;object-position:bottom left;
-  filter:drop-shadow(0 26px 46px rgba(6,26,62,.34));
+  position:absolute;
+  /* Anchored from the TOP so the head always clears the nav and it is the
+     legs that run off the bottom edge. Anchoring from the bottom crops the
+     head instead, which is the wrong end. */
+  top:calc(var(--head-h) + 10px - (var(--hero-y, 0) * 4px));
+  left:calc(var(--hero-x, 0) * 1%);
+  width:auto;max-width:none;
+  height:calc(clamp(620px, 112vh, 1080px) * var(--hero-zoom, 1));
+  object-fit:contain;object-position:top left;
+  filter:drop-shadow(0 26px 46px rgba(6,26,62,.3));
   opacity:0;transform:translateY(18px) scale(.985);
   transition:opacity .55s var(--e),transform .65s var(--e);
   will-change:opacity,transform;

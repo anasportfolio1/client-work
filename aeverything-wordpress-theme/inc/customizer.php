@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /** Small helper to cut the boilerplate down. */
-function ae_add( $wp, $id, $label, $section, $type = 'text', $default = '', $desc = '' ) {
+function ae_add( $wp, $id, $label, $section, $type = 'text', $default = '', $desc = '', $extra = null ) {
 	$sanitize = 'sanitize_text_field';
 	if ( 'textarea' === $type ) {
 		$sanitize = 'wp_kses_post';
@@ -51,6 +51,26 @@ function ae_add( $wp, $id, $label, $section, $type = 'text', $default = '', $des
 			'section'     => $section,
 			'description' => $desc,
 		) ) );
+		return;
+	}
+
+	/* A drag-slider with a live number beside it. $extra carries
+	   min / max / step. */
+	if ( 'range' === $type ) {
+		$wp->add_setting( $id, array(
+			'default'           => $default,
+			'sanitize_callback' => 'absint',
+			'transport'         => 'postMessage',
+		) );
+		$wp->add_control( $id, array(
+			'label'       => $label,
+			'section'     => $section,
+			'type'        => 'range',
+			'description' => $desc,
+			'input_attrs' => isset( $extra ) && is_array( $extra ) ? $extra : array(
+				'min' => 0, 'max' => 200, 'step' => 1,
+			),
+		) );
 		return;
 	}
 
@@ -96,6 +116,17 @@ function ae_customize_register( $wp ) {
 	   so the hero tells a different story as it rotates, the way the
 	   separate pages do in the design. */
 	$ae_slide_defaults = ae_hero_defaults();
+
+	/* --- Framing the cut-out, no code required --- */
+	ae_add( $wp, 'ae_hero_zoom', __( 'Cut-out zoom', 'aeverything' ), 'ae_hero', 'range', 100,
+		__( 'How far the model is zoomed in. Larger means more of the legs run off the bottom of the hero. 100 is the default.', 'aeverything' ),
+		array( 'min' => 60, 'max' => 170, 'step' => 2 ) );
+	ae_add( $wp, 'ae_hero_x', __( 'Move left / right', 'aeverything' ), 'ae_hero', 'range', 50,
+		__( 'Slide the model across. 50 is centred in its column — lower moves it left, toward the countdown.', 'aeverything' ),
+		array( 'min' => 0, 'max' => 100, 'step' => 1 ) );
+	ae_add( $wp, 'ae_hero_y', __( 'Move up / down', 'aeverything' ), 'ae_hero', 'range', 50,
+		__( 'Raise or drop the model. 50 sits her on the bottom edge of the hero.', 'aeverything' ),
+		array( 'min' => 0, 'max' => 100, 'step' => 1 ) );
 
 	foreach ( $ae_slide_defaults as $i => $d ) {
 		ae_add( $wp, "ae_hero_line1_$i", sprintf( __( 'Slide %d — headline line 1', 'aeverything' ), $i ), 'ae_hero', 'text', $d[0] );
@@ -191,23 +222,51 @@ function ae_customizer_css() {
 	$accent = ae_opt( 'ae_accent', '#FF3D6E' );
 	$light  = ae_opt( 'ae_accent_light', '#FF7FA3' );
 
-	if ( '#FF3D6E' === $accent && '#FF7FA3' === $light ) {
-		return; // defaults already in the stylesheet
+	$css = '';
+
+	if ( '#FF3D6E' !== $accent || '#FF7FA3' !== $light ) {
+		$css .= sprintf(
+			'--pink-600:%1$s;--pink-500:%1$s;--pink-400:%2$s;--pink-300:%2$s;',
+			esc_attr( $accent ),
+			esc_attr( $light )
+		);
 	}
 
-	printf(
-		'<style id="ae-customizer">:root{--pink-600:%1$s;--pink-500:%1$s;--pink-400:%2$s;--pink-300:%2$s;}</style>',
-		esc_attr( $accent ),
-		esc_attr( $light )
-	);
+	/* Hero framing sliders -> CSS variables. 50 is neutral on both axes,
+	   so the maths keeps the default exactly where the design has it. */
+	$zoom = (int) ae_opt( 'ae_hero_zoom', 100 );
+	$x    = (int) ae_opt( 'ae_hero_x', 50 );
+	$y    = (int) ae_opt( 'ae_hero_y', 50 );
+
+	$css .= '--hero-zoom:' . round( $zoom / 100, 3 ) . ';';
+	$css .= '--hero-x:' . ( $x - 50 ) * 0.6 . ';';   // -30% .. +30%
+	$css .= '--hero-y:' . ( $y - 50 ) * 0.4 . ';';   // -20% .. +20%
+
+	if ( $css ) {
+		printf( '<style id="ae-customizer">:root{%s}</style>', $css ); // phpcs:ignore WordPress.Security.EscapeOutput -- values escaped/cast above.
+	}
 }
 add_action( 'wp_head', 'ae_customizer_css', 20 );
 
 /** Live-refresh the title/tagline in the Customizer preview. */
 function ae_customize_preview_js() {
-	wp_add_inline_script(
-		'customize-preview',
-		"wp.customize('blogname',function(v){v.bind(function(t){document.querySelectorAll('.logo').forEach(function(e){e.textContent=t;});});});"
-	);
+	/* The three hero sliders update the preview as you drag, so framing
+	   the cut-out is a visual job rather than a guess-and-reload one. */
+	$js = "
+	var aeRoot = document.documentElement;
+	wp.customize('blogname', function(v){ v.bind(function(t){
+		document.querySelectorAll('.logo').forEach(function(e){ e.textContent = t; });
+	});});
+	wp.customize('ae_hero_zoom', function(v){ v.bind(function(n){
+		aeRoot.style.setProperty('--hero-zoom', (parseInt(n,10)/100).toFixed(3));
+	});});
+	wp.customize('ae_hero_x', function(v){ v.bind(function(n){
+		aeRoot.style.setProperty('--hero-x', ((parseInt(n,10)-50)*0.6).toString());
+	});});
+	wp.customize('ae_hero_y', function(v){ v.bind(function(n){
+		aeRoot.style.setProperty('--hero-y', ((parseInt(n,10)-50)*0.4).toString());
+	});});
+	";
+	wp_add_inline_script( 'customize-preview', $js );
 }
 add_action( 'customize_preview_init', 'ae_customize_preview_js' );
