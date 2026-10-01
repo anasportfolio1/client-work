@@ -25,6 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <a class="sr" href="#content"><?php esc_html_e( 'Skip to content', 'aeverything' ); ?></a>
 
 <?php get_template_part( 'template-parts/sprite' ); ?>
+<?php get_template_part( 'template-parts/sky' ); ?>
 
 <header class="hdr">
 	<div class="hdr-in">

@@ -51,7 +51,7 @@
 }
 .logo:hover{opacity:.78}
 
-.nav{display:flex;justify-content:center;gap:clamp(10px,1.5vw,26px)}
+.nav{display:flex;justify-content:center;gap:clamp(15px,2vw,34px)}
 .nav a{
   position:relative;padding:8px 2px;
   font-family:var(--f-display);font-variation-settings:"wdth" 100;
@@ -71,8 +71,11 @@
    by the header, hence the explicit overflow. */
 .hdr,.hdr-in{overflow:visible}
 .nav li{position:relative;display:flex;align-items:center}
+/* the caret lives inside the item, so Shop stops crowding its neighbour */
+.nav .menu-item-has-children > a{padding-right:15px}
+.nav .menu-item-has-children > a::after{left:calc(50% - 7px)}
 .nav .menu-item-has-children > a::before{
-  content:"";position:absolute;right:-11px;top:50%;width:5px;height:5px;
+  content:"";position:absolute;right:1px;top:50%;width:5px;height:5px;
   border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
   transform:translateY(-70%) rotate(45deg);opacity:.65;
   transition:transform .3s var(--e),opacity .26s var(--e);

@@ -320,7 +320,7 @@
 
 /* ---------- RESPONSIVE ---------- */
 @media (max-width:1240px){
-  .nav{gap:9px}
+  .nav{gap:13px}
   .nav a{font-size:9.5px;letter-spacing:.09em}
   .worlds{grid-template-columns:repeat(3,1fr)}
   .worldc{grid-template-columns:repeat(3,1fr)}
