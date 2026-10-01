@@ -93,6 +93,7 @@
 
     const title = $('#heroTitle'), sub = $('#heroSub'),
           btn   = $('#heroBtn'),   model = $('#heroModel'),
+          slot  = $('.hero-r > .ph'),
           copy  = $('#heroCopy');
     const dots = $$('#hero-dots .dot');
 
@@ -107,7 +108,17 @@
         if (spans[1]) spans[1].textContent = s.l2;
         if (sub) sub.textContent = s.sub || '';
         if (btn) { btn.textContent = s.btn || ''; btn.href = s.url || '#'; }
-        if (model && s.img && model.getAttribute('src') !== s.img) model.src = s.img;
+        /* Show the cut-out when this slide has one, otherwise the empty
+           slot — a slide without a photo never borrows another's. */
+        if (model) {
+          if (s.img) {
+            if (model.getAttribute('src') !== s.img) model.src = s.img;
+            model.classList.remove('is-off');
+          } else {
+            model.classList.add('is-off');
+          }
+        }
+        if (slot) slot.classList.toggle('is-off', !!s.img);
       };
 
       /* Have the next image decoded before the swipe starts, so the
@@ -121,7 +132,7 @@
         setTimeout(res, 700);
       });
 
-      const els  = [copy, model].filter(Boolean);
+      const els  = [copy, model, slot].filter(Boolean);
       let busy = false;
 
       /* Swipe left: what's on screen exits to the left, the next slide

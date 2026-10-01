@@ -14,8 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
-/* Fall back to the bundled cut-out when the client hasn't uploaded one. */
-$ae_fallback = AE_URI . '/assets/img/model-1.webp';
+/* No stand-in art. Until the client uploads a cut-out, the hero's right-hand
+   column shows an empty labelled slot — the section stays, so a real photo
+   drops straight in from Appearance > Customise > Hero. */
 
 $ae_slides = array();
 foreach ( ae_hero_defaults() as $i => $d ) {
@@ -32,9 +33,7 @@ foreach ( ae_hero_defaults() as $i => $d ) {
 		'sub' => ae_opt( "ae_hero_sub_$i", $d[2] ),
 		'btn' => ae_opt( "ae_hero_btn_$i", $d[3] ),
 		'url' => ae_opt( "ae_hero_url_$i", '' ) ? ae_opt( "ae_hero_url_$i" ) : ae_shop_url(),
-		/* Until the client uploads a cut-out per slide, every slide reuses
-		   the one supplied — better than an empty right-hand column. */
-		'img' => $img_url ? $img_url : $ae_fallback,
+		'img' => $img_url,
 	);
 }
 if ( ! $ae_slides ) {
@@ -42,10 +41,21 @@ if ( ! $ae_slides ) {
 		'l1' => 'I am nothing,', 'l2' => 'æverything.',
 		'sub' => 'Mind / Body / Spirit / Art',
 		'btn' => 'Shop the Collection', 'url' => ae_shop_url(),
-		'img' => $ae_fallback,
+		'img' => '',
 	);
 }
 $ae_first = $ae_slides[0];
+
+/* The first cut-out that actually exists, if any. Doubles as the <img>'s
+   opening src, so a slide with no photo never borrows another slide's. With
+   nothing uploaded there is no <img> at all — only the empty slot. */
+$ae_has_img = '';
+foreach ( $ae_slides as $ae_s ) {
+	if ( $ae_s['img'] ) {
+		$ae_has_img = $ae_s['img'];
+		break;
+	}
+}
 ?>
 
 <section class="hero">
@@ -78,13 +88,12 @@ $ae_first = $ae_slides[0];
 		</div>
 
 		<div class="hero-r" id="hero-car">
-			<?php if ( $ae_first['img'] ) : ?>
-				<img class="hero-model" id="heroModel"
-					src="<?php echo esc_url( $ae_first['img'] ); ?>"
+			<?php if ( $ae_has_img ) : ?>
+				<img class="hero-model<?php echo $ae_first['img'] ? '' : ' is-off'; ?>" id="heroModel"
+					src="<?php echo esc_url( $ae_has_img ); ?>"
 					alt="" fetchpriority="high" decoding="async">
-			<?php else : ?>
-				<?php ae_media( '', __( 'Hero cut-out', 'aeverything' ), 338, 'ae-hero' ); ?>
 			<?php endif; ?>
+			<?php ae_media( '', __( 'Hero image', 'aeverything' ), 338, 'ae-hero', $ae_first['img'] ? 'is-off' : '' ); ?>
 		</div>
 
 		<a href="<?php echo esc_url( home_url( '/world-of-ae/' ) ); ?>" class="ae-badge"

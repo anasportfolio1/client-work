@@ -223,10 +223,16 @@
 .hero-copy.sw-in{opacity:0;transform:translateX(46px);transition:none}
 .hero-model.sw-out{opacity:0;transform:translateX(-56px)}
 .hero-model.sw-in{opacity:0;transform:translateX(56px);transition:none}
-/* placeholder slots keep their panel look until a real cut-out is added */
+/* placeholder slots keep their panel look until a real cut-out is added.
+   Visible without JS, and it swipes with the copy like the cut-out does. */
 .hero-r > .ph{
   position:absolute;inset:0;border-radius:0 0 0 var(--r-xl);overflow:hidden;
+  transition:opacity .55s var(--e),transform .65s var(--e);
 }
+.hero-r > .ph.sw-out{opacity:0;transform:translateX(-56px)}
+.hero-r > .ph.sw-in{opacity:0;transform:translateX(56px);transition:none}
+/* whichever of the two the current slide has no use for steps aside */
+.hero-model.is-off,.hero-r > .ph.is-off{display:none}
 
 /* widget stack */
 .widgets{display:flex;gap:14px;flex-wrap:wrap}
