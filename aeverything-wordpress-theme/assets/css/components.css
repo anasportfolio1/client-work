@@ -546,6 +546,17 @@
 /* ---------- REVEAL ---------- */
 .rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--e),transform .8s var(--e)}
 .rv.in{opacity:1;transform:none}
+
+/* Headings arrive a line at a time. Each line sits in its own clipping box
+   and slides up from behind it, the next one a beat later — so a two-line
+   headline reads as being written rather than appearing as a block. The
+   container stops sliding when it holds split lines, otherwise two moves
+   fight each other. */
+.rv:has(.ln){transform:none}
+.ln{display:block;overflow:hidden;padding-bottom:.09em;margin-bottom:-.09em}
+.ln > span{display:block;transform:translateY(108%);transition:transform .85s var(--e)}
+.in .ln > span{transform:none}
+@media (prefers-reduced-motion:reduce){.ln > span{transform:none!important}}
 @media (prefers-reduced-motion:reduce){
   .rv{opacity:1!important;transform:none!important}
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}

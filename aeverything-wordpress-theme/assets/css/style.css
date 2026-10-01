@@ -83,68 +83,24 @@ table{border-collapse:collapse;width:100%}
    iOS Safari ignores the latter. */
 .sky{
   position:relative; isolation:isolate;
-  background:#12408f;            /* holds the colour for the first paint */
+  background:#1E6CCC;            /* holds the colour while the photo loads */
 }
-
-/* ---------- THE SKY, DRAWN IN CODE --------------------------------------
-   No photograph. A deep-to-bright blue gradient, a sun in the top-left and
-   three layers of fractal noise thresholded into cloud. Each layer is
-   rasterised once and only its wrapper is transformed, so the drift is a
-   compositor job rather than a repaint.
-   position:fixed rather than background-attachment:fixed — iOS Safari
-   ignores the latter. */
-.sky-bg{
-  position:fixed;inset:0;z-index:-3;pointer-events:none;overflow:hidden;
-  background:linear-gradient(180deg,
-    #0a2a63 0%, #103c88 15%, #1858b4 33%, #2b78d2 53%,
-    #5fa3e4 73%, #a4d0f3 90%, #d8ecfb 100%);
+.sky::before{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:var(--sky-photo) center center / cover no-repeat;
 }
-.sky-sun{
-  position:absolute;left:-5%;top:-13%;
-  width:clamp(300px,34vw,560px);aspect-ratio:1;border-radius:50%;
-  /* Kept small and tucked into the corner. Anything larger reaches the
-     headline and the widgets, and white type on a white glow disappears. */
-  background:radial-gradient(circle at 50% 50%,
-    rgba(255,255,255,.88) 0%, rgba(255,250,235,.46) 15%,
-    rgba(214,236,255,.24) 34%, rgba(170,211,248,.09) 56%, transparent 72%);
-  filter:blur(6px);
-  animation:ae-sun 15s ease-in-out infinite alternate;
-}
-@keyframes ae-sun{from{opacity:.84;transform:scale(1)}to{opacity:1;transform:scale(1.05)}}
-
-.sky-l{
-  position:absolute;left:-32%;width:184%;will-change:transform;
-  /* Cloud thins out towards the sun and builds with distance from it. This
-     is what the mockups do, and it keeps the white headline and the widgets
-     sitting on clear blue instead of on fog. */
-  -webkit-mask-image:radial-gradient(118% 96% at 13% 16%,
-    transparent 0%, rgba(0,0,0,.18) 24%, rgba(0,0,0,.62) 45%, #000 68%);
-          mask-image:radial-gradient(118% 96% at 13% 16%,
-    transparent 0%, rgba(0,0,0,.18) 24%, rgba(0,0,0,.62) 45%, #000 68%);
-}
-.sky-l svg{display:block;width:100%;height:100%}
-.sky-l1{top:-4%;height:74%;opacity:.52;animation:ae-drift-a 190s ease-in-out infinite alternate}
-.sky-l2{top:8%; height:76%;opacity:.42;animation:ae-drift-b 126s ease-in-out infinite alternate}
-.sky-l3{top:24%;height:70%;opacity:.30;animation:ae-drift-c  84s ease-in-out infinite alternate}
-@keyframes ae-drift-a{from{transform:translate3d(0,0,0)}    to{transform:translate3d(-13%,-2%,0)}}
-@keyframes ae-drift-b{from{transform:translate3d(-7%,1%,0)} to{transform:translate3d(6%,-2%,0)}}
-@keyframes ae-drift-c{from{transform:translate3d(5%,0,0)}   to{transform:translate3d(-11%,-3%,0)}}
-
-@media (prefers-reduced-motion:reduce){.sky-sun,.sky-l{animation:none}}
-/* phones: two layers reads the same and keeps the filter cost down */
-@media (max-width:620px){.sky-l3{display:none}}
 .sky::after{
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:
+    /* No painted sun — the photograph has a real one. */
     /* bright haze along the bottom, into the footer */
     radial-gradient(170% 20% at 50% 100%,
-      rgba(255,255,255,.72) 0%, rgba(226,241,255,.22) 36%, transparent 68%),
-    /* just enough darkening at the top to hold the white nav and headline —
-       the drawn sky already carries the colour, so this stays light or it
-       flattens the cloud out of existence */
+      rgba(255,255,255,.78) 0%, rgba(226,241,255,.26) 36%, transparent 68%),
+    /* brand blue — heavy at the top so white nav and headline stay readable */
     linear-gradient(180deg,
-      rgba(5,26,70,.36) 0%, rgba(9,46,112,.22) 16%, rgba(18,80,170,.10) 36%,
-      transparent 58%, transparent 100%);
+      rgba(6,34,86,.62) 0%, rgba(11,58,138,.44) 14%, rgba(20,91,190,.26) 32%,
+      rgba(40,120,212,.15) 52%, rgba(110,175,234,.12) 76%,
+      rgba(168,208,244,.24) 92%, rgba(190,222,248,.34) 100%);
 }
 .sky-soft{background:linear-gradient(180deg,var(--sky-800) 0%,var(--sky-700) 22%,var(--sky-600) 46%,var(--sky-400) 74%,var(--sky-200) 100%)}
 /* Education / lesson pages keep the same photo, under a much darker tint. */

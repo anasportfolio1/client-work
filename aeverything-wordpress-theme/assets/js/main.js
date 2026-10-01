@@ -106,6 +106,7 @@
         const spans = title.querySelectorAll('span');
         spans[0].textContent = s.l1;
         if (spans[1]) spans[1].textContent = s.l2;
+        lineSplit(title);
         if (sub) sub.textContent = s.sub || '';
         if (btn) { btn.textContent = s.btn || ''; btn.href = s.url || '#'; }
         /* Show the cut-out when this slide has one, otherwise the empty
@@ -268,7 +269,23 @@
     });
   };
 
-  /* ---------- 13. SCROLL REVEAL ---------- */
+  /* ---------- 13. HEADING LINE REVEAL ----------
+     A heading's hard line breaks become separate clipping boxes, so a
+     two-line headline arrives one line after the other. Only headings
+     inside a .rv container are touched — that container is what flips
+     them visible, so nothing can end up stranded hidden. */
+  const lineSplit = el => {
+    if (!el || el.dataset.ln === '1') return;
+    const segs = el.innerHTML.split(/<br\s*\/?>/i).map(s => s.trim()).filter(Boolean);
+    if (!segs.length) return;
+    el.innerHTML = segs.map((s, i) =>
+      '<span class="ln"><span style="transition-delay:' + (i * 110) + 'ms">' + s + '</span></span>'
+    ).join('');
+    el.dataset.ln = '1';
+  };
+  $$('.rv .h-hero, .rv .h-page, .rv .h-sec, .rv h1, .rv h2').forEach(lineSplit);
+
+  /* ---------- 13b. SCROLL REVEAL ---------- */
   const rv = $$('.rv');
   if ('IntersectionObserver' in window && rv.length) {
     const io = new IntersectionObserver((entries) => {
