@@ -70,7 +70,33 @@
     if (isNaN(target) || target <= new Date()) {
       target = new Date(Date.now() + (3 * 86400 + 14 * 3600 + 27 * 60 + 18) * 1000);
     }
-    const put = (id, v) => { const e = $('#' + id); if (e) e.textContent = String(v).padStart(2, '0'); };
+    /* Render a two-digit value as two rolling columns. The strip of 0-9 is
+       built once; after that a change is one transform per digit. */
+    const roll = (e, str) => {
+      if (e.dataset.odo !== '1') {
+        e.textContent = '';
+        for (let i = 0; i < str.length; i++) {
+          const win = document.createElement('span');
+          win.className = 'odo';
+          const strip = document.createElement('span');
+          strip.className = 'odo-r';
+          for (let d = 0; d <= 9; d++) {
+            const b = document.createElement('b');
+            b.textContent = String(d);
+            strip.appendChild(b);
+          }
+          win.appendChild(strip);
+          e.appendChild(win);
+        }
+        e.dataset.odo = '1';
+      }
+      const strips = e.querySelectorAll('.odo-r');
+      for (let i = 0; i < strips.length; i++) {
+        strips[i].style.transform = 'translateY(-' + (+str[i] || 0) + 'em)';
+      }
+      e.dataset.v = str;
+    };
+    const put = (id, v) => { const e = $('#' + id); if (e) roll(e, String(v).padStart(2, '0')); };
     const tick = () => {
       let diff = Math.max(0, target - new Date());
       const d = Math.floor(diff / 864e5); diff -= d * 864e5;
@@ -106,6 +132,7 @@
         const spans = title.querySelectorAll('span');
         spans[0].textContent = s.l1;
         if (spans[1]) spans[1].textContent = s.l2;
+        title.dataset.ln = '';   /* innerHTML was just replaced — allow a re-split */
         lineSplit(title);
         if (sub) sub.textContent = s.sub || '';
         if (btn) { btn.textContent = s.btn || ''; btn.href = s.url || '#'; }
@@ -276,11 +303,28 @@
      them visible, so nothing can end up stranded hidden. */
   const lineSplit = el => {
     if (!el || el.dataset.ln === '1') return;
-    const segs = el.innerHTML.split(/<br\s*\/?>/i).map(s => s.trim()).filter(Boolean);
-    if (!segs.length) return;
-    el.innerHTML = segs.map((s, i) =>
-      '<span class="ln"><span style="transition-delay:' + (i * 110) + 'ms">' + s + '</span></span>'
-    ).join('');
+    /* Hard breaks give the lines; each line is then split into words. Built
+       with textContent rather than innerHTML so entities such as &aelig;
+       survive and nothing can be injected through a heading. */
+    const probe = document.createElement('div');
+    const lines = el.innerHTML.split(/<br\s*\/?>/i)
+      .map(s => { probe.innerHTML = s; return probe.textContent.replace(/\s+/g, ' ').trim(); })
+      .filter(Boolean);
+    if (!lines.length) return;
+    el.textContent = '';
+    lines.forEach((line, li) => {
+      const ln = document.createElement('span');
+      ln.className = 'ln';
+      line.split(' ').forEach((word, wi) => {
+        const wd = document.createElement('span');
+        wd.className = 'wd';
+        wd.textContent = word;
+        wd.style.transitionDelay = (li * 150 + wi * 60) + 'ms';
+        ln.appendChild(wd);
+        ln.appendChild(document.createTextNode(' '));
+      });
+      el.appendChild(ln);
+    });
     el.dataset.ln = '1';
   };
   $$('.rv .h-hero, .rv .h-page, .rv .h-sec, .rv h1, .rv h2').forEach(lineSplit);
@@ -367,10 +411,10 @@
   /* Countdown seconds tick visibly. */
   const cdS = $('#cdS');
   if (cdS) {
-    let last = cdS.textContent;
+    let last = cdS.dataset.v || '';
     setInterval(() => {
-      if (cdS.textContent !== last) {
-        last = cdS.textContent;
+      if (cdS.dataset.v !== last) {
+        last = cdS.dataset.v;
         cdS.classList.add('tick');
         setTimeout(() => cdS.classList.remove('tick'), 220);
       }

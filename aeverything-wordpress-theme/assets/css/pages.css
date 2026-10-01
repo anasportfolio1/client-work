@@ -443,3 +443,33 @@
   .btn-lg{padding:12px 20px;font-size:10px}
   .lbox{padding:4vh 4vw}
 }
+
+/* ---------- SWIPE ROWS ----------------------------------------------
+   Below a laptop the Shop-by-World and product grids stop being grids and
+   become a snapping, finger-swipeable row. Native overflow scrolling, so
+   the momentum is the operating system's rather than something we animate.
+   Desktop keeps the grid, where everything already fits on one screen. */
+@media (max-width:1040px){
+  .worlds,
+  .sect-b .prods{
+    display:flex;
+    grid-template-columns:none;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scroll-padding-inline:var(--gutter);
+    gap:12px;
+    margin-inline:calc(var(--gutter) * -1);
+    padding-inline:var(--gutter);
+    padding-bottom:6px;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .worlds::-webkit-scrollbar,
+  .sect-b .prods::-webkit-scrollbar{display:none}
+  .worlds > *,
+  .sect-b .prods > *{flex:0 0 72%;scroll-snap-align:start}
+}
+@media (max-width:560px){
+  .worlds > *{flex:0 0 80%}
+  .sect-b .prods > *{flex:0 0 68%}
+}

@@ -553,10 +553,20 @@
    container stops sliding when it holds split lines, otherwise two moves
    fight each other. */
 .rv:has(.ln){transform:none}
-.ln{display:block;overflow:hidden;padding-bottom:.09em;margin-bottom:-.09em}
-.ln > span{display:block;transform:translateY(108%);transition:transform .85s var(--e)}
-.in .ln > span{transform:none}
-@media (prefers-reduced-motion:reduce){.ln > span{transform:none!important}}
+.ln{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
+/* each word rises out of its line on its own beat, so the headline reads
+   as being written rather than switched on */
+.wd{display:inline-block;transform:translateY(110%);transition:transform .8s var(--e)}
+.in .wd{transform:none}
+@media (prefers-reduced-motion:reduce){.wd{transform:none!important}}
+
+/* ---------- ODOMETER DIGITS ----------
+   A column of 0-9 behind a one-character window. Changing the digit slides
+   the column, so the number physically rolls. Only transform moves. */
+.odo{display:inline-block;overflow:hidden;height:1em;line-height:1;vertical-align:bottom}
+.odo-r{display:block;transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.odo-r b{display:block;height:1em;line-height:1;font-weight:inherit;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){.odo-r{transition:none}}
 @media (prefers-reduced-motion:reduce){
   .rv{opacity:1!important;transform:none!important}
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}

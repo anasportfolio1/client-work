@@ -70,6 +70,21 @@ add_action( 'after_setup_theme', 'ae_setup' );
 /* -------------------------------------------------------------------------
  * 2. Assets
  * ---------------------------------------------------------------------- */
+/**
+ * Asset version from the file's own timestamp.
+ *
+ * A fixed version string means every edit is served from the browser cache
+ * until someone hard-refreshes — which silently hides changes from the
+ * client, and made testing this theme unreliable.
+ *
+ * @param string $rel Theme-relative path, leading slash.
+ * @return string
+ */
+function ae_ver( $rel ) {
+	$file = AE_DIR . $rel;
+	return file_exists( $file ) ? (string) filemtime( $file ) : AE_VERSION;
+}
+
 function ae_assets() {
 	wp_enqueue_style(
 		'ae-fonts',
@@ -79,14 +94,14 @@ function ae_assets() {
 	);
 
 	/* Order matters: tokens -> components -> page layouts */
-	wp_enqueue_style( 'ae-tokens',     AE_URI . '/assets/css/style.css',      array( 'ae-fonts' ), AE_VERSION );
-	wp_enqueue_style( 'ae-components', AE_URI . '/assets/css/components.css', array( 'ae-tokens' ), AE_VERSION );
-	wp_enqueue_style( 'ae-pages',      AE_URI . '/assets/css/pages.css',      array( 'ae-components' ), AE_VERSION );
+	wp_enqueue_style( 'ae-tokens',     AE_URI . '/assets/css/style.css',      array( 'ae-fonts' ), ae_ver( '/assets/css/style.css' ) );
+	wp_enqueue_style( 'ae-components', AE_URI . '/assets/css/components.css', array( 'ae-tokens' ), ae_ver( '/assets/css/components.css' ) );
+	wp_enqueue_style( 'ae-pages',      AE_URI . '/assets/css/pages.css',      array( 'ae-components' ), ae_ver( '/assets/css/pages.css' ) );
 
 	/* The theme's own style.css last, so overrides win */
-	wp_enqueue_style( 'ae-style', get_stylesheet_uri(), array( 'ae-pages' ), AE_VERSION );
+	wp_enqueue_style( 'ae-style', get_stylesheet_uri(), array( 'ae-pages' ), ae_ver( '/style.css' ) );
 
-	wp_enqueue_script( 'ae-main', AE_URI . '/assets/js/main.js', array(), AE_VERSION, true );
+	wp_enqueue_script( 'ae-main', AE_URI . '/assets/js/main.js', array(), ae_ver( '/assets/js/main.js' ), true );
 
 	wp_localize_script( 'ae-main', 'aeData', array(
 		'ajaxUrl'    => admin_url( 'admin-ajax.php' ),
