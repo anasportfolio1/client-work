@@ -12,3 +12,7 @@ WhatsApp*
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Session/editor leftovers — never belong in the client repo
+.claude/
+aeverything/.git/
