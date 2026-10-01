@@ -21,6 +21,12 @@
   --glass-brd:rgba(255,255,255,.34);
   --glass-brd-soft:rgba(255,255,255,.20);
   --glass-dark:rgba(8,24,47,.42);
+  /* Glass without blur. backdrop-filter re-blurs whatever is behind it on
+     every frame the backdrop moves, which is what scrolling is — so panels
+     over scrolling content fake the look with a sheen over a denser fill.
+     Real blur stays only where the page behind is frozen. */
+  --sheen:linear-gradient(158deg,rgba(255,255,255,.20) 0%,rgba(255,255,255,.07) 38%,rgba(255,255,255,.02) 100%);
+  --sheen-soft:linear-gradient(158deg,rgba(255,255,255,.13) 0%,rgba(255,255,255,.05) 42%,rgba(255,255,255,.015) 100%);
   --glass-dark-brd:rgba(255,255,255,.12);
 
   --sh-sm:0 6px 18px rgba(8,40,92,.14);
@@ -185,10 +191,10 @@ h1,h2,h3,h4,h5{
   box-shadow:var(--sh-pink);white-space:nowrap;
   transition:transform .3s var(--e),box-shadow .3s var(--e),filter .3s var(--e);
 }
-.btn:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(255,61,110,.5);filter:saturate(115%)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(255,61,110,.5)}
 .btn:active{transform:translateY(0)}
 .btn svg{width:15px;height:15px;stroke-width:2.2;flex:none}
-.btn-glass{--bg:var(--glass);border:1px solid var(--glass-brd);box-shadow:var(--sh-sm);backdrop-filter:blur(16px)}
+.btn-glass{--bg:rgba(255,255,255,.22);border:1px solid var(--glass-brd);box-shadow:var(--sh-sm)}
 .btn-glass:hover{--bg:var(--glass-2);box-shadow:var(--sh)}
 .btn-ghost{--bg:transparent;border:1.4px solid rgba(255,255,255,.5);box-shadow:none}
 .btn-ghost:hover{--bg:rgba(255,255,255,.12);box-shadow:none}
@@ -209,8 +215,7 @@ h1,h2,h3,h4,h5{
 .pills{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .pill{
   padding:8px 20px;border-radius:var(--r-pill);
-  background:rgba(255,255,255,.14);border:1px solid var(--glass-brd-soft);
-  backdrop-filter:blur(14px);
+  background:rgba(255,255,255,.21);border:1px solid var(--glass-brd-soft);
   font-family:var(--f-display);font-variation-settings:"wdth" 100;
   font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
   color:rgba(255,255,255,.88);transition:all .28s var(--e);
@@ -226,8 +231,8 @@ h1,h2,h3,h4,h5{
 
 .field{
   width:100%;padding:14px 20px;border-radius:var(--r-pill);
-  background:rgba(255,255,255,.14);border:1px solid var(--glass-brd-soft);
-  color:#fff;font-size:13.5px;backdrop-filter:blur(12px);
+  background:rgba(255,255,255,.19);border:1px solid var(--glass-brd-soft);
+  color:#fff;font-size:13.5px;
   transition:border-color .3s var(--e),background .3s var(--e);
 }
 .field::placeholder{color:rgba(255,255,255,.55)}
@@ -235,17 +240,14 @@ h1,h2,h3,h4,h5{
 
 /* ---------- 6. GLASS ---------- */
 .glass{
-  background:var(--glass);border:1px solid var(--glass-brd-soft);
+  background:var(--sheen-soft),rgba(255,255,255,.17);border:1px solid var(--glass-brd-soft);
   border-radius:var(--r-lg);
-  backdrop-filter:blur(22px) saturate(140%);
-  -webkit-backdrop-filter:blur(22px) saturate(140%);
   box-shadow:var(--sh);
 }
 .glass-lite{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.16);box-shadow:var(--sh-sm)}
 .glass-solid{background:rgba(255,255,255,.30);border-color:rgba(255,255,255,.5)}
 .glass-dark{
-  background:var(--glass-dark);border:1px solid var(--glass-dark-brd);
-  backdrop-filter:blur(22px) saturate(130%);-webkit-backdrop-filter:blur(22px) saturate(130%);
+  background:var(--sheen-soft),rgba(8,24,47,.58);border:1px solid var(--glass-dark-brd);
   border-radius:var(--r-lg);box-shadow:0 20px 50px rgba(3,12,26,.5);
 }
 

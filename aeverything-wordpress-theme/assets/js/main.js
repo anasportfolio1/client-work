@@ -279,7 +279,18 @@
         io.unobserve(en.target);
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px' });
-    rv.forEach((el, k) => { el.style.transitionDelay = (k % 7) * 55 + 'ms'; io.observe(el); });
+    /* Stagger by position within the element's own group rather than by
+       global document order. Counting across the whole page meant a
+       heading, its sub-line and its button could land on 340ms, 395ms and
+       0ms — which reads as random instead of choreographed. */
+    const seen = new Map();
+    rv.forEach(el => {
+      const group = el.closest('section, footer') || document.body;
+      const n = seen.get(group) || 0;
+      seen.set(group, n + 1);
+      el.style.transitionDelay = Math.min(n, 6) * 80 + 'ms';
+      io.observe(el);
+    });
   } else {
     rv.forEach(el => el.classList.add('in'));
   }
