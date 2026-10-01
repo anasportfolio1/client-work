@@ -337,6 +337,7 @@
 @media (max-width:1040px){
   :root{--head-h:66px}
   .nav{display:none}
+  .burger{display:grid}
   .hdr-in{grid-template-columns:auto 1fr auto}
   /* --- MOBILE HERO ---------------------------------------------------
        row 1:  clock + next drop, full width

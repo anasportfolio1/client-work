@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'container_class' => 'nav',
 				'container_aria_label' => __( 'Primary', 'aeverything' ),
 				'items_wrap'     => '%3$s',
-				'depth'          => 1,
+				'depth'          => 2,
 				'fallback_cb'    => false,
 			) );
 		} else {
@@ -82,7 +82,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'container'       => 'nav',
 				'container_class' => 'mnav',
 				'items_wrap'      => '%3$s',
-				'depth'           => 1,
+				'depth'           => 2,
 				'fallback_cb'     => false,
 				'link_after'      => '<svg aria-hidden="true"><use href="#i-arr-r"></use></svg>',
 			) );

@@ -29,8 +29,10 @@
 }
 .hdr-l{display:flex;align-items:center;gap:16px}
 
+/* Mobile only. On desktop the whole nav is already on screen, so a menu
+   button would just duplicate it — pages.css switches this back on at 1040px. */
 .burger{
-  width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
+  width:34px;height:34px;display:none;place-items:center;border-radius:10px;
   transition:background .26s var(--e);
 }
 .burger:hover{background:rgba(255,255,255,.14)}
@@ -64,6 +66,41 @@
 .nav a:hover{color:#fff}
 .nav a:hover::after,.nav a.is-on::after{width:100%}
 .nav a.is-on{color:#fff}
+
+/* Shop holds its categories in a drop-down. The panel must not be clipped
+   by the header, hence the explicit overflow. */
+.hdr,.hdr-in{overflow:visible}
+.nav li{position:relative;display:flex;align-items:center}
+.nav .menu-item-has-children > a::before{
+  content:"";position:absolute;right:-11px;top:50%;width:5px;height:5px;
+  border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+  transform:translateY(-70%) rotate(45deg);opacity:.65;
+  transition:transform .3s var(--e),opacity .26s var(--e);
+}
+.nav .menu-item-has-children:hover > a::before{transform:translateY(-30%) rotate(225deg);opacity:1}
+.nav .sub-menu{
+  position:absolute;top:100%;left:50%;margin:0;padding:8px;list-style:none;
+  min-width:172px;display:flex;flex-direction:column;gap:2px;z-index:60;
+  border-radius:var(--r-md);
+  background:rgba(9,32,74,.5);border:1px solid rgba(255,255,255,.24);
+  backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);
+  box-shadow:var(--sh);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:translateX(-50%) translateY(7px);
+  transition:opacity .26s var(--e),transform .3s var(--e);
+}
+.nav li:hover > .sub-menu,.nav li:focus-within > .sub-menu{
+  opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0);
+}
+.nav .sub-menu li{display:block}
+.nav .sub-menu a{
+  display:block;padding:9px 12px;border-radius:9px;text-align:left;white-space:nowrap;
+  transition:background .24s var(--e),color .24s var(--e);
+}
+.nav .sub-menu a::after{display:none}
+.nav .sub-menu a:hover{background:rgba(255,255,255,.15);color:#fff}
+/* the parent keeps its underline while its panel is open */
+.nav li:hover > a::after{width:100%}
 
 .hdr-r{display:flex;align-items:center;gap:4px}
 .ico{
@@ -122,6 +159,14 @@
 .mnav a:hover{color:var(--pink-300);padding-left:10px}
 .mnav a svg{width:15px;height:15px;stroke-width:2;opacity:.5}
 .mnav-sub{font-size:12px!important;font-variation-settings:"wdth" 100!important;color:rgba(255,255,255,.72)}
+/* drawer: sub-categories indent under their parent */
+.mnav li{display:flex;flex-direction:column}
+.mnav .sub-menu{
+  list-style:none;margin:1px 0 7px 13px;padding:0 0 0 13px;
+  display:flex;flex-direction:column;gap:1px;
+  border-left:1px solid rgba(255,255,255,.2);
+}
+.mnav .sub-menu a{font-size:12px;font-variation-settings:"wdth" 100;color:rgba(255,255,255,.74)}
 
 /* search overlay */
 .searchbox{
