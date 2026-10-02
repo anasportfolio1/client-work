@@ -133,7 +133,9 @@
         spans[0].textContent = s.l1;
         if (spans[1]) spans[1].textContent = s.l2;
         title.dataset.ln = '';   /* innerHTML was just replaced — allow a re-split */
+        title.classList.remove('typed');
         lineSplit(title);
+        retype(title);
         if (sub) sub.textContent = s.sub || '';
         if (btn) { btn.textContent = s.btn || ''; btn.href = s.url || '#'; }
         /* Show the cut-out when this slide has one, otherwise the empty
@@ -353,7 +355,43 @@
     });
     el.dataset.ln = '1';
   };
-  $$('.rv .h-hero, .rv .h-page, .rv .h-sec, .rv h1, .rv h2').forEach(lineSplit);
+  /* Replay: drop the class, force the removal to land, put it back. A
+     reflow rather than rAF, because rAF is throttled in a hidden tab. */
+  function retype(el) {           /* declaration, so it is hoisted: the hero
+                                     carousel calls this from further up */
+    el.classList.remove('typed');
+    void el.offsetWidth;
+    el.classList.add('typed');
+  }
+
+  /* Every heading on every page, top of the page or far down it. The
+     footer is left alone, and so is anything inside a drawer or overlay
+     that is not on screen yet. */
+  const heads = [...new Set($$('h1, h2, .h-hero, .h-page, .h-sec'))]
+    .filter(el => !el.closest('.ftr, .drawer, .searchbox, .lbox, .modal'));
+
+  heads.forEach(lineSplit);
+
+  const calm = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if (!calm && 'IntersectionObserver' in window) {
+    const typer = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) retype(e.target); });
+    }, { threshold: 0.2 });
+    heads.forEach(el => typer.observe(el));
+
+    /* ...and again every 5s, but only for the headings actually on screen,
+       and not the hero headline, whose rhythm belongs to the carousel. */
+    const onScreen = el => {
+      const r = el.getBoundingClientRect();
+      return r.top < innerHeight - 40 && r.bottom > 40;
+    };
+    setInterval(() => {
+      if (document.hidden) return;
+      heads.forEach(el => { if (el.id !== 'heroTitle' && onScreen(el)) retype(el); });
+    }, 5000);
+  } else {
+    heads.forEach(el => el.classList.add('typed'));
+  }
 
   /* ---------- 13b. SCROLL REVEAL ---------- */
   const rv = $$('.rv');
