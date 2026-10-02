@@ -311,18 +311,44 @@
       .map(s => { probe.innerHTML = s; return probe.textContent.replace(/\s+/g, ' ').trim(); })
       .filter(Boolean);
     if (!lines.length) return;
+
+    const STEP = 34;   /* ms per character */
+    const GAP  = 240;  /* pause before the next line starts */
+    let at = 0;
+
     el.textContent = '';
-    lines.forEach((line, li) => {
+    lines.forEach(line => {
+      const lineStart = at;
       const ln = document.createElement('span');
       ln.className = 'ln';
+
+      const type = (parent, text) => {
+        for (const c of text) {          /* of, not index — keeps æ in one piece */
+          const ch = document.createElement('span');
+          ch.className = 'ch';
+          ch.textContent = c;
+          ch.style.transitionDelay = at + 'ms';
+          at += STEP;
+          parent.appendChild(ch);
+        }
+      };
+
       line.split(' ').forEach((word, wi) => {
+        /* the space lives outside the word so a long line can still wrap */
+        if (wi) type(ln, ' ');
         const wd = document.createElement('span');
         wd.className = 'wd';
-        wd.textContent = word;
-        wd.style.transitionDelay = (li * 150 + wi * 60) + 'ms';
+        type(wd, word);
         ln.appendChild(wd);
-        ln.appendChild(document.createTextNode(' '));
       });
+
+      /* blink from the moment this line starts, vanish once it is typed */
+      const caret = document.createElement('i');
+      caret.className = 'ln-caret';
+      caret.style.animationDelay = lineStart + 'ms, ' + (at + 140) + 'ms';
+      ln.appendChild(caret);
+
+      at += GAP;
       el.appendChild(ln);
     });
     el.dataset.ln = '1';
