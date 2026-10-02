@@ -530,6 +530,7 @@
   font-size:11.5px;color:var(--ink-2);
 }
 .ftr-bot-l{display:flex;gap:20px;flex-wrap:wrap}
+.ftr-bot,.ftr-bot a{color:#141414}
 .ftr-bot a{transition:color .26s var(--e)}
 .ftr-bot a:hover{color:var(--pink-600)}
 .cur-sel{display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:99px;background:rgba(255,255,255,.5);border:1px solid rgba(15,47,92,.14);font-size:11.5px;font-weight:600}
