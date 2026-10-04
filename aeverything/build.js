@@ -21,8 +21,7 @@ const read = f => fs.readFileSync(f, 'utf8');
 
 const sprite   = read(P('sprite.html'));
 const header   = read(P('header.html'));
-const footerA  = read(P('footer-a.html'));
-const footerB  = read(P('footer-b.html'));
+const footer   = read(P('footer-a.html'));   /* one footer on every page */
 const widgets  = read(P('widgets.html'));
 
 /* garments.txt -> { 'g-crop': '<svg>…</svg>', … } */
@@ -77,7 +76,7 @@ ${header}
 <main>
 ${o.content}
 </main>
-${o.footer === 'b' ? footerB : footerA}
+${footer}
 <script src="assets/js/main.js?v=${ASSET_V}" defer></script>
 </body>
 </html>
@@ -95,7 +94,6 @@ files.forEach(f => {
     title: meta(raw, 'title', 'æverything'),
     desc: meta(raw, 'desc', 'æverything — mind, body, spirit, art.'),
     body: meta(raw, 'body', 'sky'),
-    footer: meta(raw, 'footer', 'a'),
     content: content,
   });
   /* expand {{widgets}} / {{g-*}} across the whole document, header included */
