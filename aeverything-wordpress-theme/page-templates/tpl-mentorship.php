@@ -66,7 +66,7 @@ $ae_icons = array( 'i-target', 'i-headphones', 'i-brain', 'i-chart', 'i-leaf' );
 <?php if ( $ae_benefits ) : ?>
 <section class="sect-b">
 	<div class="wrap">
-		<div class="sec-head sec-head-c rv">
+		<div class="sec-head rv">
 			<h2 class="h-sec"><?php echo esc_html( ae_opt( 'ae_mentor_benefits_title', 'What You’ll Get' ) ); ?></h2>
 		</div>
 		<div class="bene-grid">

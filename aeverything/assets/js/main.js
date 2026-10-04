@@ -228,6 +228,18 @@
     });
   });
 
+  /* A category in the address applies the matching filter on arrival, so
+     a link like shop.html?c=headwear actually lands on headwear instead
+     of the full catalogue. */
+  (() => {
+    const group = $('[data-filter-group]');
+    if (!group) return;
+    const want = new URLSearchParams(location.search).get('c');
+    if (!want) return;
+    const pill = group.querySelector('.pill[data-val="' + want + '"]');
+    if (pill) pill.click();
+  })();
+
   /* ---------- 7. ACCORDIONS ---------- */
   $$('.acc').forEach(acc => {
     const hd = $('.acc-hd', acc), bd = $('.acc-bd', acc);
@@ -362,7 +374,9 @@
      did not actually restart the character animation, all that showed was
      the caret winking on and off like a stray cursor. One heading, typed
      once on arrival and again when the carousel brings in a new slide. */
-  const heroHead = $('#heroTitle');
+  /* The first big heading on whatever page this is: the homepage hero,
+     a service page headline, or a page title like Magazine. */
+  const heroHead = $('main #heroTitle') || $('main .h-hero') || $('main .h-page');
   if (heroHead) {
     if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
       heroHead.classList.add('typed');

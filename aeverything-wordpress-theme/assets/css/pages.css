@@ -588,7 +588,6 @@
 .tile,.tile span,.tile b{color:#000}
 .field{color:#000}
 .field::placeholder{color:#5A5A5A}
-.tlink{color:var(--pink-700)}
 .ae-badge{color:#000;background:rgba(255,255,255,.55);border-color:rgba(255,255,255,.8)}
 .ae-badge:hover{background:rgba(255,255,255,.75)}
 

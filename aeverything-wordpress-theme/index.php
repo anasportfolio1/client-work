@@ -23,7 +23,7 @@ get_header();
 				} elseif ( is_archive() ) {
 					the_archive_title();
 				} else {
-					echo esc_html( get_the_title( get_option( 'page_for_posts' ) ) ?: __( 'Æ Magazine', 'aeverything' ) );
+					echo esc_html( get_the_title( get_option( 'page_for_posts' ) ) ?: __( 'Magazine', 'aeverything' ) );
 				}
 				?>
 			</h1>

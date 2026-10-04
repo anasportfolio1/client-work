@@ -371,3 +371,11 @@ body.admin-bar .hdr{top:32px}
 /* tapped open on touch, where there is no hover to rely on */
 .nav li.is-open > .sub-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
 .mnav li.is-open > .sub-menu{display:flex}
+
+/* The three packages read as a centred block of choices rather than a
+   row stretched across the full width. */
+.pkg-grid-3{max-width:980px;margin-inline:auto}
+
+/* Link text is never brand pink: it reads as an error. */
+.tlink,.tlink:hover{color:#fff}
+.sect-b .tlink,.phead .tlink{color:#fff}
