@@ -314,13 +314,12 @@
       .filter(Boolean);
     if (!lines.length) return;
 
-    const STEP = 34;   /* ms per character */
-    const GAP  = 240;  /* pause before the next line starts */
+    const STEP = 55;   /* ms per character — unhurried on purpose */
+    const GAP  = 340;  /* pause before the next line starts */
     let at = 0;
 
     el.textContent = '';
     lines.forEach(line => {
-      const lineStart = at;
       const ln = document.createElement('span');
       ln.className = 'ln';
 
@@ -344,12 +343,6 @@
         ln.appendChild(wd);
       });
 
-      /* blink from the moment this line starts, vanish once it is typed */
-      const caret = document.createElement('i');
-      caret.className = 'ln-caret';
-      caret.style.animationDelay = lineStart + 'ms, ' + (at + 140) + 'ms';
-      ln.appendChild(caret);
-
       at += GAP;
       el.appendChild(ln);
     });
@@ -364,33 +357,19 @@
     el.classList.add('typed');
   }
 
-  /* Every heading on every page, top of the page or far down it. The
-     footer is left alone, and so is anything inside a drawer or overlay
-     that is not on screen yet. */
-  const heads = [...new Set($$('h1, h2, .h-hero, .h-page, .h-sec'))]
-    .filter(el => !el.closest('.ftr, .drawer, .searchbox, .lbox, .modal'));
-
-  heads.forEach(lineSplit);
-
-  const calm = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-  if (!calm && 'IntersectionObserver' in window) {
-    const typer = new IntersectionObserver(es => {
-      es.forEach(e => { if (e.isIntersecting) retype(e.target); });
-    }, { threshold: 0.2 });
-    heads.forEach(el => typer.observe(el));
-
-    /* ...and again every 5s, but only for the headings actually on screen,
-       and not the hero headline, whose rhythm belongs to the carousel. */
-    const onScreen = el => {
-      const r = el.getBoundingClientRect();
-      return r.top < innerHeight - 40 && r.bottom > 40;
-    };
-    setInterval(() => {
-      if (document.hidden) return;
-      heads.forEach(el => { if (el.id !== 'heroTitle' && onScreen(el)) retype(el); });
-    }, 5000);
-  } else {
-    heads.forEach(el => el.classList.add('typed'));
+  /* The hero headline, and nothing else. Typing every heading on a five
+     second timer turned the page into a flicker, and because the replay
+     did not actually restart the character animation, all that showed was
+     the caret winking on and off like a stray cursor. One heading, typed
+     once on arrival and again when the carousel brings in a new slide. */
+  const heroHead = $('#heroTitle');
+  if (heroHead) {
+    if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+      heroHead.classList.add('typed');
+    } else {
+      lineSplit(heroHead);
+      retype(heroHead);
+    }
   }
 
   /* ---------- 13b. SCROLL REVEAL ---------- */

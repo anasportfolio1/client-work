@@ -566,20 +566,11 @@
 .wd{display:inline-block;white-space:pre}
 .ch{display:inline-block;white-space:pre;opacity:0}
 .typed .ch{opacity:1;transition:opacity .01s linear}
-.ln-caret{
-  display:inline-block;width:.07em;min-width:2px;height:.9em;
-  margin-left:.05em;vertical-align:-.06em;
-  background:currentColor;border-radius:1px;opacity:0;
-}
-.typed .ln-caret{animation:ae-caret .7s steps(1) infinite, ae-caret-off .01s linear forwards}
-@keyframes ae-caret{0%,49%{opacity:.9}50%,100%{opacity:0}}
-@keyframes ae-caret-off{to{opacity:0;width:0;margin:0}}
 /* the block itself gets out of the way quickly so the typing is not
    happening behind a fade */
 .rv:has(.ln){transform:none;transition-duration:.35s}
 @media (prefers-reduced-motion:reduce){
   .ch{opacity:1!important}
-  .ln-caret{display:none}
 }
 
 /* ---------- ODOMETER DIGITS ----------
