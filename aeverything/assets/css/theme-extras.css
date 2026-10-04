@@ -304,3 +304,26 @@ textarea.ae-input{resize:vertical;min-height:96px;line-height:1.55}
 /* ---------- WP ADMIN BAR OFFSET ---------- */
 body.admin-bar .hdr{top:32px}
 @media (max-width:782px){body.admin-bar .hdr{top:46px}}
+
+/* ---------- WHO IS WHITE AND WHO IS BLACK ---------------------------
+   Headings and anything else sitting straight on the sky are white, over
+   a wash dark enough to carry them. Everything inside a light panel is
+   black, because that is where the reading happens — package details,
+   benefit copy, the closing banner. */
+.crumb,.crumb a{color:rgba(255,255,255,.9)}
+.hero-sub{color:rgba(255,255,255,.92)}
+.back{color:rgba(255,255,255,.88)}
+.lbl{color:rgba(255,255,255,.88)}
+.muted{color:rgba(255,255,255,.78)}
+.art-stand,.art-body p.body,.key p,.art-keys .khd span{color:rgba(255,255,255,.92)}
+.art-body h1,.art-body h2{color:#fff}
+
+/* light panels: black, and the headings inside them too, because white
+   on white glass is the thing we were trying to fix */
+.bene h3,.bene p{color:#000}
+.pkg,.pkg-name,.pkg-price,.pkg-blurb,.pkg-list span{color:#000}
+.book-band h2,.book-band p,.book-hint{color:#000}
+.pcard,.pcard h3,.pcard-pr,.pcard-col{color:#000}
+.tile,.tile span,.tile b{color:#000}
+.pill{color:#000}
+.field{color:#000}
