@@ -216,7 +216,7 @@
 .hero-sub{
   font-family:var(--f-display);font-variation-settings:"wdth" 100;
   font-size:12.5px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;
-  color:#1A1A1A;margin-bottom:24px;
+  color:#000;margin-bottom:24px;
 }
 /* image column bleeds to the top-right corner, under the header */
 /* The model is a cut-out standing on the sky — no panel, no rounded box,
@@ -480,7 +480,7 @@
 .acc-bd-in li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:var(--pink-400)}
 
 /* breadcrumb */
-.crumb{display:flex;align-items:center;flex-wrap:wrap;gap:9px;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:#1A1A1A}
+.crumb{display:flex;align-items:center;flex-wrap:wrap;gap:9px;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:#000}
 .crumb a{transition:color .26s var(--e)}
 .crumb a:hover{color:#fff}
 .crumb svg{width:10px;height:10px;stroke-width:2.4;opacity:.5}

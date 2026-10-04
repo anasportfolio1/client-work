@@ -213,10 +213,10 @@ function ae_icon( $id, $class = '' ) {
 
 /** Body classes — the sky gradient is applied to <body>. */
 function ae_body_class( $classes ) {
+	/* One sky on every page. There used to be a darker variant for the
+	   lesson pages, but the page copy is black now and a dark backdrop
+	   would make it unreadable. */
 	$classes[] = 'sky';
-	if ( is_page_template( 'page-templates/tpl-lesson.php' ) || is_singular( 'ae_lesson' ) ) {
-		$classes[] = 'sky-deep';
-	}
 	return $classes;
 }
 add_filter( 'body_class', 'ae_body_class' );
