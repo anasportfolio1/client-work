@@ -183,6 +183,29 @@ function ae_customize_register( $wp ) {
 	ae_add( $wp, 'ae_fit_img', __( 'Fitness — hero image', 'aeverything' ), 'ae_pagehero', 'image', '' );
 
 	/* ---- Footer ----------------------------------------------------- */
+	/* ---- Mentorship -------------------------------------------------
+	   The page is content, not code. The five benefits and the three
+	   packages are plain text the client edits here, and the booking
+	   link is one field that every Apply button uses. */
+	$wp->add_section( 'ae_mentorship', array(
+		'title' => __( 'Mentorship page', 'aeverything' ),
+		'panel' => 'ae_panel',
+	) );
+	ae_add( $wp, 'ae_calendly_url', __( 'Booking calendar link', 'aeverything' ), 'ae_mentorship', 'url', '',
+		__( 'Paste your Calendly link here. Every Apply button opens it and passes along the package the visitor chose.', 'aeverything' ) );
+	ae_add( $wp, 'ae_mentor_intro', __( 'Intro paragraph', 'aeverything' ), 'ae_mentorship', 'textarea',
+		'1 on 1 mentorship designed to help you unlock your full potential and create the life you’re meant to live.' );
+	ae_add( $wp, 'ae_mentor_benefits_title', __( 'Benefits heading', 'aeverything' ), 'ae_mentorship', 'text', 'What You’ll Get' );
+	ae_add( $wp, 'ae_mentor_benefits', __( 'Benefits', 'aeverything' ), 'ae_mentorship', 'textarea', ae_mentor_benefit_defaults(),
+		__( 'One per line:  Title | Description', 'aeverything' ) );
+	ae_add( $wp, 'ae_mentor_plans_title', __( 'Packages heading', 'aeverything' ), 'ae_mentorship', 'text', 'Mentorship Packages' );
+	ae_add( $wp, 'ae_mentor_plans', __( 'Packages', 'aeverything' ), 'ae_mentorship', 'textarea', ae_mentor_plan_defaults(),
+		__( 'One per line:  Name | Duration | Price | bullet; bullet; bullet', 'aeverything' ) );
+	ae_add( $wp, 'ae_mentor_popular', __( 'Which package carries the Most Popular flag', 'aeverything' ), 'ae_mentorship', 'text', 'Transformation' );
+	ae_add( $wp, 'ae_mentor_cta_title', __( 'Closing banner heading', 'aeverything' ), 'ae_mentorship', 'text', 'Ready to Transform?' );
+	ae_add( $wp, 'ae_mentor_cta_sub', __( 'Closing banner line', 'aeverything' ), 'ae_mentorship', 'text', 'Spots are limited. Serious inquiries only.' );
+	ae_add( $wp, 'ae_mentor_cta_btn', __( 'Closing banner button', 'aeverything' ), 'ae_mentorship', 'text', 'Apply Now' );
+
 	$wp->add_section( 'ae_footer', array(
 		'title' => __( 'Footer', 'aeverything' ),
 		'panel' => 'ae_panel',

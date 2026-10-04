@@ -473,3 +473,55 @@
   .worlds > *{flex:0 0 80%}
   .sect-b .prods > *{flex:0 0 68%}
 }
+
+/* ---------- SERVICE PAGE HERO ---------------------------------------
+   Mentorship, Fitness and AI Videos share this. No clock and no drop
+   countdown: those are shop furniture, and a launch timer on a coaching
+   page advertises the wrong thing. The breadcrumb does the work of
+   telling you that you have left the homepage. */
+.hero-page .hero-copy{margin-top:18px}
+.hero-page .crumb{margin-bottom:22px}
+.hero-page .hero-sub{margin-bottom:14px}
+
+/* ---------- BENEFIT CARDS -------------------------------------------
+   "What you will get" — icon, title, one line. */
+.bene-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(10px,1.1vw,16px)}
+.bene{
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:11px;
+  padding:26px 16px 22px;border-radius:var(--r-md);
+  background:var(--sheen-soft),rgba(255,255,255,.15);
+  border:1px solid var(--glass-brd-soft);box-shadow:var(--sh-sm);
+  transition:transform .4s var(--e),background .4s var(--e);
+}
+.bene:hover{transform:translateY(-4px);background:var(--sheen),rgba(255,255,255,.2)}
+.bene svg{width:34px;height:34px;stroke-width:1.3;color:#fff;opacity:.95}
+.bene h3{
+  font-family:var(--f-display);font-variation-settings:"wdth" 100;
+  font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;
+  line-height:1.3;color:#fff;
+}
+.bene p{font-size:11.5px;line-height:1.5;color:rgba(255,255,255,.82);font-weight:300}
+
+/* three packages rather than the four the AI brief uses */
+.pkg-grid-3{grid-template-columns:repeat(3,1fr)}
+
+/* ---------- BOOKING BAND --------------------------------------------
+   The closing call to action. Its button is the one that opens the
+   booking calendar. */
+.book-band{
+  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  padding:clamp(22px,2.6vw,34px) clamp(22px,2.8vw,38px);border-radius:var(--r-lg);
+  background:var(--sheen-soft),rgba(255,255,255,.16);
+  border:1px solid var(--glass-brd-soft);box-shadow:var(--sh);
+}
+.book-band h2{font-size:clamp(17px,1.7vw,24px);font-weight:800;font-variation-settings:"wdth" 100;color:#fff;margin-bottom:5px}
+.book-band p{font-size:12.5px;color:rgba(255,255,255,.82);font-weight:300}
+
+@media (max-width:1040px){
+  .bene-grid{grid-template-columns:repeat(3,1fr)}
+  .pkg-grid-3{grid-template-columns:1fr}
+  .book-band{flex-direction:column;align-items:flex-start}
+}
+@media (max-width:560px){
+  .bene-grid{grid-template-columns:repeat(2,1fr)}
+}

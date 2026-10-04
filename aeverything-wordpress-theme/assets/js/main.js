@@ -475,6 +475,28 @@
     });
   }
 
+
+  /* ---------- 17. PLAN CHOICE -> BOOKING LINK ----------
+     Choosing a package does not navigate anywhere. It marks the choice and
+     writes it onto the booking button, so whoever takes the call already
+     knows which plan the enquiry is about. */
+  const bookBtn = $("[data-book]");
+  if (bookBtn) {
+    const base = bookBtn.dataset.bookUrl || bookBtn.getAttribute("href") || "";
+    const label = $("#planChosen");
+
+    const setPlan = name => {
+      if (label) { label.textContent = name; label.classList.add("on"); }
+      if (!base || base === "#") return;          /* no calendar link set yet */
+      const url = new URL(base, location.href);
+      url.searchParams.set("utm_content", name);  /* the booking tool passes this through */
+      bookBtn.setAttribute("href", url.toString());
+    };
+
+    $$("#planGrid .pkg").forEach(p =>
+      on(p, "click", () => setPlan(p.dataset.pkg || "")));
+  }
+
   /* ---------- 16. MARK ACTIVE NAV ---------- */
   const here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   $$('.nav a, .mnav a').forEach(a => {

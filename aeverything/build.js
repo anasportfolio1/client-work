@@ -22,6 +22,11 @@ const read = f => fs.readFileSync(f, 'utf8');
 const sprite   = read(P('sprite.html'));
 const header   = read(P('header.html'));
 const footer   = read(P('footer-a.html'));   /* one footer on every page */
+
+/* The booking calendar the mentorship buttons open. One line to change
+   when the client supplies their Calendly link; leave it empty and the
+   buttons stay inert rather than pointing at a dead #. */
+const BOOKING_URL = '';
 const widgets  = read(P('widgets.html'));
 
 /* garments.txt -> { 'g-crop': '<svg>…</svg>', … } */
@@ -36,6 +41,8 @@ const meta = (src, key, fallback) => {
 };
 
 function expand(html) {
+  /* the booking calendar, blank until the client supplies it */
+  html = html.split("{{booking}}").join(BOOKING_URL || "#");
   html = html.replace(/\{\{widgets\}\}/g, widgets);
   Object.keys(garments).forEach(k => {
     html = html.split('{{' + k + '}}').join(garments[k]);

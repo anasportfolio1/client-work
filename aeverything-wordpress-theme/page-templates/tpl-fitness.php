@@ -11,20 +11,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 ?>
-<section class="hero">
+<!-- Same shape as Mentorship and AI Videos. No clock or drop countdown:
+     those belong to the shop, and a launch timer on a training page
+     advertises the wrong thing. The breadcrumb is what tells you that
+     you have left the homepage. -->
+<section class="hero hero-page">
 	<div class="hero-grid">
 		<div class="hero-l">
-			<?php get_template_part( 'template-parts/widgets' ); ?>
+			<nav class="crumb rv" aria-label="<?php esc_attr_e( 'Breadcrumb', 'aeverything' ); ?>">
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'aeverything' ); ?></a>
+				<span>/</span>
+				<span aria-current="page"><?php esc_html_e( 'Fitness', 'aeverything' ); ?></span>
+			</nav>
+
 			<div class="hero-copy rv">
 				<h1 class="h-hero"><?php echo esc_html( ae_opt( 'ae_fit_title', 'Æverything Fitness' ) ); ?></h1>
-				<p class="lede" style="margin:10px 0 22px"><?php echo nl2br( esc_html( ae_opt( 'ae_fit_sub', 'Train the body. Strengthen the mind. Elevate the spirit.' ) ) ); ?></p>
-				<a href="#programs" class="btn btn-lg"><?php echo esc_html( ae_opt( 'ae_fit_btn', 'Explore Programs' ) ); ?> <?php ae_icon( 'i-arr-r' ); ?></a>
+				<p class="hero-sub"><?php echo esc_html( ae_opt( 'ae_fit_sub', 'Train the body. Strengthen the mind.' ) ); ?></p>
+				<p class="lede" style="max-width:34ch;margin-bottom:26px"><?php echo esc_html( ae_opt( 'ae_fit_intro', 'Programmes built to move you forward — strength, mobility and the discipline that holds it all together.' ) ); ?></p>
+				<a href="#programs" class="btn btn-lg"><?php echo esc_html( ae_opt( 'ae_fit_btn', 'Explore Programmes' ) ); ?> <?php ae_icon( 'i-arr-r' ); ?></a>
 			</div>
 			<div></div>
 		</div>
+
 		<div class="hero-r">
-			<?php ae_media( ae_opt( 'ae_fit_img', '' ), __( 'Fitness hero', 'aeverything' ), 338, 'ae-hero' ); ?>
-			<a href="<?php echo esc_url( home_url( '/world-of-ae/' ) ); ?>" class="ae-badge">&aelig;</a>
+			<?php ae_media( ae_opt( 'ae_fit_img', '' ), __( 'Hero image', 'aeverything' ), 338, 'ae-hero' ); ?>
+			<a href="<?php echo esc_url( home_url( '/world-of-ae/' ) ); ?>" class="ae-badge" aria-label="<?php esc_attr_e( 'World of Æ', 'aeverything' ); ?>">&aelig;</a>
 		</div>
 	</div>
 </section>

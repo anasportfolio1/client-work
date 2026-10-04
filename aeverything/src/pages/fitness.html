@@ -3,20 +3,25 @@
 <!--@body: sky-->
 <!--@footer: a-->
 
-<section class="hero">
+<section class="hero hero-page">
   <div class="hero-grid">
     <div class="hero-l">
-      {{widgets}}
+      <nav class="crumb rv" aria-label="Breadcrumb">
+        <a href="index.html">Home</a><span>/</span><span aria-current="page">Fitness</span>
+      </nav>
+
       <div class="hero-copy rv">
         <h1 class="h-hero">&AElig;verything<br>Fitness</h1>
-        <p class="lede" style="margin:10px 0 22px">Train the body.<br>Strengthen the mind.<br>Elevate the spirit.</p>
-        <a href="#programs" class="btn btn-lg">Explore Programs <svg><use href="#i-arr-r"/></svg></a>
+        <p class="hero-sub">Train the body. Strengthen the mind.</p>
+        <p class="lede" style="max-width:34ch;margin-bottom:26px">Programmes built to move you forward &mdash; strength, mobility and the discipline that holds it all together.</p>
+        <a href="#programs" class="btn btn-lg">Explore Programmes <svg><use href="#i-arr-r"/></svg></a>
       </div>
       <div></div>
     </div>
+
     <div class="hero-r">
-      <div class="ph" style="--h:338;position:absolute;inset:0"><span class="ph-lb">Hero image</span></div>
-      <a href="world.html" class="ae-badge" aria-label="World of Æ">&aelig;</a>
+      <div class="ph" style="position:absolute;inset:0"><span class="ph-lb">Hero image</span></div>
+      <a href="world.html" class="ae-badge" aria-label="World of &AElig;">&aelig;</a>
     </div>
   </div>
 </section>

@@ -144,6 +144,29 @@ function ae_hero_defaults() {
 }
 
 /** Theme option with fallback. */
+/**
+ * The five things a mentee gets, one per line as "Title | Description".
+ * The client's own words, from their design.
+ */
+function ae_mentor_benefit_defaults() {
+	return "Personalized Strategy | A plan tailored to your goals and lifestyle.\n"
+		. "1 on 1 Support | Direct access and ongoing guidance.\n"
+		. "Mindset & Discipline | Build habits that create lasting change.\n"
+		. "Accountability | Stay aligned and consistent.\n"
+		. "Inner Alignment | Spiritual + mental balance for success.";
+}
+
+/**
+ * The packages, one per line as "Name | Duration | Price | bullet; bullet".
+ * There is no checkout here: a package is a choice, and the booking
+ * button carries it through to the call.
+ */
+function ae_mentor_plan_defaults() {
+	return "Foundation | 1 Month | £150 | 2 x 1-on-1 Calls; Personalized Plan; Email Support; Goal Tracking\n"
+		. "Transformation | 3 Months | £375 | Weekly 1-on-1 Calls; Personalized Plan; Priority Support; Habit & Progress Tracking; Exclusive Resources\n"
+		. "Mastery | 6 Months | £700 | Weekly 1-on-1 Calls; Advanced Strategy; Unlimited Support; Full Accountability; Exclusive Resources";
+}
+
 function ae_opt( $key, $default = '' ) {
 	$v = get_theme_mod( $key, $default );
 	return ( '' === $v || null === $v ) ? $default : $v;
