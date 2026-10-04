@@ -327,3 +327,47 @@ body.admin-bar .hdr{top:32px}
 .tile,.tile span,.tile b{color:#000}
 .pill{color:#000}
 .field{color:#000}
+
+/* ---------- CENTRED SECTION HEAD ------------------------------------
+   Used on the mentorship page, where the packages read as a row of
+   choices rather than a left-aligned list. */
+.sec-head-c{justify-content:center;text-align:center}
+.sec-head-c .h-sec{width:100%;text-align:center}
+
+/* ---------- NO RED COPY ---------------------------------------------
+   Link text was brand pink, which read as an error message. On the sky
+   it is white; inside a light panel it is black. */
+.tlink{color:#fff}
+.tlink:hover{color:#fff;opacity:.8}
+.pkg-cta,.pkg.is-on .pkg-cta{color:#000}
+.art-list a.is-on{color:#000}
+.cats a.is-on,.wish-link:hover,.wish-link.is-on{color:#fff}
+
+/* ---------- WORLD OF Æ ----------------------------------------------
+   The globe was 560px centred in a 480px band with overflow hidden, so
+   it was cut off top and bottom and shoved the heading down. It is
+   smaller now, starts below the header, and its lower half runs on
+   behind the pillar cards instead of being clipped. */
+.world-hero{
+  min-height:clamp(260px,32vh,340px);
+  align-items:flex-start;
+  padding-top:clamp(16px,3vh,30px);
+  overflow:visible;
+}
+.globe{
+  right:0;top:4px;transform:none;
+  width:min(360px,30vw);
+  z-index:1;
+}
+.world-hero .wrap{z-index:3}
+#pillars{position:relative;z-index:3;padding-top:0}
+.worldc{position:relative;z-index:3}
+
+@media (max-width:1040px){
+  .globe{width:min(240px,34vw);opacity:.5}
+  .world-hero{min-height:220px}
+}
+
+/* tapped open on touch, where there is no hover to rely on */
+.nav li.is-open > .sub-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.mnav li.is-open > .sub-menu{display:flex}

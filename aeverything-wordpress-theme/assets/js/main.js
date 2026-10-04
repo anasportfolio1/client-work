@@ -500,6 +500,19 @@
       }));
   }
 
+  /* ---------- 15b. SHOP IS A MENU, NOT A LINK ----------
+     Clicking a nav item that owns a drop-down should reveal the
+     drop-down, not navigate. On a pointer device the menu is already
+     open on hover, so the click is simply swallowed; on touch the first
+     tap opens it. The children still navigate normally. */
+  $$('.nav .menu-item-has-children > a, .mnav .menu-item-has-children > a').forEach(a => {
+    on(a, 'click', e => {
+      e.preventDefault();
+      const li = a.parentElement;
+      li.classList.toggle('is-open');
+    });
+  });
+
   /* ---------- 16. MARK ACTIVE NAV ---------- */
   const here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   $$('.nav a, .mnav a').forEach(a => {
