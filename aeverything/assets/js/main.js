@@ -386,7 +386,26 @@
     }
   }
 
-  /* ---------- 13b. SCROLL REVEAL ---------- */
+  /* ---------- 13b. SCROLL REVEAL ----------
+     Only a handful of elements were marked by hand, so most of a page
+     arrived already assembled. Everything inside a content section now
+     takes part, which is what makes a page feel like it is being built
+     as you scroll rather than simply being there. The hero is left out:
+     it has its own choreography, and the header, drawers and overlays
+     are not part of the page flow. */
+  const REVEAL = [
+    'main .wrap > *',
+    'main .phead .wrap > *',
+    'main .worlds > *', 'main .worldc > *', 'main .prods > *',
+    'main .bene-grid > *', 'main .pkg-grid > *', 'main .edu-grid > *',
+    'main .gal-masonry > *', 'main .prog-grid-4 > *', 'main .prog-grid-6 > *',
+    'main .acards > *', 'main .tiles > *', 'main .dtiles > *',
+  ].join(',');
+  $$(REVEAL).forEach(el => {
+    if (el.closest('.hero')) return;
+    el.classList.add('rv');
+  });
+
   const rv = $$('.rv');
   if ('IntersectionObserver' in window && rv.length) {
     const io = new IntersectionObserver((entries) => {
@@ -406,7 +425,7 @@
       const group = el.closest('section, footer') || document.body;
       const n = seen.get(group) || 0;
       seen.set(group, n + 1);
-      el.style.transitionDelay = Math.min(n, 6) * 80 + 'ms';
+      el.style.transitionDelay = Math.min(n, 7) * 105 + 'ms';
       io.observe(el);
     });
   } else {
