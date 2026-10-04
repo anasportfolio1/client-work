@@ -479,8 +479,8 @@
    countdown: those are shop furniture, and a launch timer on a coaching
    page advertises the wrong thing. The breadcrumb does the work of
    telling you that you have left the homepage. */
-.hero-page .hero-copy{margin-top:18px}
-.hero-page .crumb{margin-bottom:22px}
+.hero-page .hero-copy{margin-top:0}
+.hero-page .crumb{margin-bottom:10px}
 .hero-page .hero-sub{margin-bottom:14px}
 
 /* ---------- BENEFIT CARDS -------------------------------------------
@@ -611,6 +611,9 @@
    A service page has a breadcrumb where the widgets were and an empty
    spacer where the dots were, so the same rule opened a 208px hole
    between the breadcrumb and the headline. Group them instead. */
-.hero-page .hero-l{justify-content:center}
-.hero-page .crumb{margin-bottom:16px}
+/* Top-aligned: the breadcrumb stays where it was, under the header,
+   and the headline comes up to meet it. Centring moved the breadcrumb
+   down instead, which is the opposite of what was wanted. */
+.hero-page .hero-l{justify-content:flex-start;padding-top:clamp(18px,3vh,34px)}
+.hero-page .crumb{margin-bottom:10px}
 .hero-page .hero-l > div:empty{display:none}
