@@ -23,7 +23,7 @@
     <div class="hdr-r">
       <button class="ico" data-open="#search" aria-label="Search"><svg><use href="#i-search"/></svg></button>
       <a href="account.html" class="ico" aria-label="Account"><svg><use href="#i-user"/></svg></a>
-      <button class="ico" data-open="#cart" aria-label="Cart"><svg><use href="#i-bag"/></svg><span class="badge" data-cart-count>2</span></button>
+      <button class="ico" data-open="#cart" aria-label="Cart"><svg><use href="#i-bag"/></svg><span class="badge" data-cart-count>0</span></button>
     </div>
   </div>
 </header>
@@ -74,31 +74,11 @@
 <!-- CART DRAWER -->
 <aside class="drawer drawer-r" id="cart" aria-label="Bag">
   <div class="drawer-hd">
-    <h3 class="h-sec" style="font-size:14px">Your Bag <span class="pink">(2)</span></h3>
+    <h3 class="h-sec" style="font-size:14px">Your Bag <span class="pink">(0)</span></h3>
     <button class="x" data-close aria-label="Close"><svg><use href="#i-close"/></svg></button>
   </div>
   <div class="drawer-bd">
-    <div class="cart-item">
-      <div class="cart-thumb">{{g-crop}}</div>
-      <div>
-        <h4 class="h-card" style="margin-bottom:3px">&AElig; Crop Top</h4>
-        <p class="tiny muted">Bubble Gum &middot; M &middot; Qty 1</p>
-      </div>
-      <b>&pound;40.00</b>
-    </div>
-    <div class="cart-item">
-      <div class="cart-thumb">{{g-legg}}</div>
-      <div>
-        <h4 class="h-card" style="margin-bottom:3px">&AElig; Leggings</h4>
-        <p class="tiny muted">Bubble Gum &middot; M &middot; Qty 1</p>
-      </div>
-      <b>&pound;55.00</b>
-    </div>
-    <div style="margin-top:22px">
-      <div class="cart-line"><span class="muted">Subtotal</span><b>&pound;95.00</b></div>
-      <div class="cart-line"><span class="muted">Shipping</span><b>Free</b></div>
-      <div class="cart-line" style="border-top:1px solid rgba(255,255,255,.18);margin-top:6px;padding-top:12px;font-size:15px"><b>Total</b><b>&pound;95.00</b></div>
-    </div>
+    <p class="lede" style="padding:20px 0">Your bag is empty.</p>
   </div>
   <div class="drawer-ft">
     <a href="#" class="btn btn-block" style="margin-bottom:9px">Checkout</a>
@@ -114,11 +94,11 @@
       <button class="search-go" aria-label="Go"><svg><use href="#i-arr-r"/></svg></button>
     </form>
     <div class="search-sug">
-      <a class="pill" href="shop.html">Bubble Gum</a>
-      <a class="pill" href="shop.html">New In</a>
-      <a class="pill" href="magazine.html">Shadow Work</a>
-      <a class="pill" href="education.html">Hermetic Principles</a>
-      <a class="pill" href="fitness.html">Mobility</a>
+      <a class="pill" href="shop.html?c=women">Women</a>
+      <a class="pill" href="shop.html?c=men">Men</a>
+      <a class="pill" href="magazine.html">Magazine</a>
+      <a class="pill" href="education.html">Education</a>
+      <a class="pill" href="fitness.html">Fitness</a>
     </div>
   </div>
 </div>

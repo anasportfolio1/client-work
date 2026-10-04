@@ -92,15 +92,18 @@ table{border-collapse:collapse;width:100%}
 .sky::after{
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:
-    /* No painted sun — the photograph has a real one. */
-    /* bright haze along the bottom, into the footer */
-    radial-gradient(170% 20% at 50% 100%,
-      rgba(255,255,255,.78) 0%, rgba(226,241,255,.26) 36%, transparent 68%),
-    /* brand blue — heavy at the top so white nav and headline stay readable */
+    /* The sky is a photograph, so the only thing guaranteeing that text
+       stays readable is this wash. It used to fade to nothing by halfway
+       and turn light after 76%, which left white body copy in the lower
+       half of every page sitting on bright cloud. It now holds a steady
+       darkening through the content and only brightens into the last
+       stretch, where the footer sits and the type is black. */
+    radial-gradient(150% 15% at 50% 100%,
+      rgba(255,255,255,.66) 0%, rgba(226,241,255,.18) 44%, transparent 74%),
     linear-gradient(180deg,
-      rgba(6,34,86,.62) 0%, rgba(11,58,138,.44) 14%, rgba(20,91,190,.26) 32%,
-      rgba(40,120,212,.15) 52%, rgba(110,175,234,.12) 76%,
-      rgba(168,208,244,.24) 92%, rgba(190,222,248,.34) 100%);
+      rgba(6,34,86,.62) 0%, rgba(9,46,112,.52) 12%, rgba(12,58,136,.44) 30%,
+      rgba(13,64,148,.42) 52%, rgba(14,68,152,.40) 74%,
+      rgba(58,118,192,.30) 89%, rgba(190,222,248,.28) 100%);
 }
 .sky-soft{background:linear-gradient(180deg,var(--sky-800) 0%,var(--sky-700) 22%,var(--sky-600) 46%,var(--sky-400) 74%,var(--sky-200) 100%)}
 /* Education / lesson pages keep the same photo, under a much darker tint. */
@@ -132,7 +135,7 @@ h1,h2,h3,h4,h5{
   color:var(--pink-300);display:block;
 }
 .lede{font-size:clamp(13.5px,1.02vw,16.5px);line-height:1.58;color:rgba(255,255,255,.86);font-weight:300}
-.muted{color:rgba(255,255,255,.66)}
+.muted{color:rgba(255,255,255,.80)}
 .tiny{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
 .pink{color:var(--pink-400)}
 
