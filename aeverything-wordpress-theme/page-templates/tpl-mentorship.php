@@ -128,6 +128,7 @@ $ae_icons = array( 'i-target', 'i-headphones', 'i-brain', 'i-chart', 'i-leaf' );
 				<h2><?php echo esc_html( ae_opt( 'ae_mentor_cta_title', 'Ready to Transform?' ) ); ?></h2>
 				<p><?php echo esc_html( ae_opt( 'ae_mentor_cta_sub', 'Spots are limited. Serious inquiries only.' ) ); ?></p>
 			</div>
+			<span class="book-hint"><?php esc_html_e( 'Choose a package above to continue.', 'aeverything' ); ?></span>
 			<a href="<?php echo $ae_booking ? esc_url( $ae_booking ) : '#apply'; ?>"
 				class="btn btn-lg" data-book
 				data-book-url="<?php echo esc_attr( $ae_booking ); ?>"

@@ -173,10 +173,10 @@ Tags: e-commerce, custom-colors, custom-menu, custom-logo, featured-images, tran
 /* ---------- AI VIDEO PACKAGES ---------- */
 .pkg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.2vw,16px)}
 .pkg{
-  position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:9px;
-  padding:24px 20px 20px;border-radius:var(--r-lg);text-align:left;cursor:pointer;
-  background:var(--sheen),rgba(255,255,255,.15);border:1px solid var(--glass-brd-soft);
-  color:#fff;
+  position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;
+  padding:28px 22px 22px;border-radius:var(--r-lg);text-align:center;cursor:pointer;
+  background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.8);
+  color:#000;
   transition:transform .42s var(--e),background .42s var(--e),
              border-color .42s var(--e),box-shadow .42s var(--e);
 }
@@ -209,9 +209,9 @@ Tags: e-commerce, custom-colors, custom-menu, custom-logo, featured-images, tran
 .pkg-list span{display:flex;align-items:flex-start;gap:8px;font-size:11px;color:rgba(255,255,255,.84)}
 .pkg-list svg{width:13px;height:13px;flex:none;margin-top:1px;stroke-width:1.8;color:var(--pink-300)}
 .pkg-cta{
-  margin-top:auto;padding-top:12px;display:inline-flex;align-items:center;gap:8px;
-  font-family:var(--f-display);font-size:10px;font-weight:800;letter-spacing:.17em;
-  text-transform:uppercase;color:var(--pink-300);transition:gap .3s var(--e)
+  margin-top:auto;padding-top:16px;display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--f-display);font-size:11px;font-weight:800;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--pink-700);transition:gap .3s var(--e)
 }
 .pkg:hover .pkg-cta{gap:14px}
 .pkg-cta svg{width:13px;height:13px;stroke-width:2.3}

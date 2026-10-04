@@ -494,7 +494,10 @@
     };
 
     $$("#planGrid .pkg").forEach(p =>
-      on(p, "click", () => setPlan(p.dataset.pkg || "")));
+      on(p, "click", () => {
+        document.body.classList.add("plan-picked");
+        setPlan(p.dataset.pkg || "");
+      }));
   }
 
   /* ---------- 16. MARK ACTIVE NAV ---------- */

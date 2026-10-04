@@ -525,3 +525,82 @@
 @media (max-width:560px){
   .bene-grid{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ---------- BLACK TYPE ON LIGHT PANELS ------------------------------
+   The sky is a photograph with big white clouds in it, so white copy was
+   landing on white. The page wash is light now and the copy is black; the
+   panels follow, otherwise black type sits on a dark card. */
+.bene{background:rgba(255,255,255,.58);border-color:rgba(255,255,255,.78)}
+.bene:hover{background:rgba(255,255,255,.72)}
+.bene svg{color:var(--pink-700);opacity:1}
+.bene h3{color:#000;font-size:12px}
+.bene p{color:#1A1A1A;font-size:13px}
+
+.pkg-blurb{color:#3A3A3A;font-size:13px}
+.pkg-list span{color:#1A1A1A;font-size:12.5px;text-align:left}
+.pkg-list svg{color:var(--pink-700)}
+.pkg:hover{background:rgba(255,255,255,.74)}
+.pkg.is-on{background:rgba(255,255,255,.86);border-color:var(--pink-600);box-shadow:0 14px 34px rgba(255,61,110,.22)}
+.pkg.is-on .pkg-cta{color:var(--pink-700)}
+.pkg-flag{background:var(--pink-600);color:#fff}
+
+.book-band{background:rgba(255,255,255,.62);border-color:rgba(255,255,255,.8)}
+.book-band h2{color:#000}
+.book-band p{color:#1A1A1A;font-size:13.5px}
+
+/* The booking button is pointless until a package is chosen, so it is not
+   shown until then. */
+.book-band [data-book]{display:none}
+.plan-picked .book-band [data-book]{display:inline-flex}
+.book-hint{font-size:12.5px;color:#3A3A3A;font-weight:400}
+.plan-picked .book-hint{display:none}
+
+/* ---------- SERVICE PAGE HERO ON MOBILE -----------------------------
+   The homepage squeezes its cut-out in beside the copy, because there is
+   a person to look at. A service page has an empty image slot, so there
+   is nothing to gain from a 145px column — and the call-to-action was
+   overflowing underneath it. Stack instead: copy at full width, image
+   below it. */
+@media (max-width:1040px){
+  .hero-page .hero-grid{display:block;padding-bottom:26px}
+  .hero-page .hero-l{display:block}
+  .hero-page .hero-copy{margin-top:0}
+  .hero-page .hero-r{
+    position:relative;width:100%;height:clamp(230px,36vh,320px);
+    margin:22px 0 0;overflow:hidden;border-radius:var(--r-md);
+  }
+  .hero-page .hero-r > .ph{border-radius:var(--r-md)}
+  .hero-page .btn-lg{white-space:normal}
+}
+
+/* ---------- COMPONENT TEXT ON THE LIGHT SKY -------------------------
+   Everything that sits on pale glass over the sky goes black with the
+   rest of the page copy. Three things deliberately stay white: the nav,
+   which lives in the dark band at the very top; anything inside a drawer
+   or the search overlay, which are dark panels over a frozen page; and
+   card captions that sit on an image veil, where the veil is doing the
+   darkening. */
+.pcard,.pcard h3,.pcard-pr,.pcard-col{color:#000}
+.pcard-col{color:#3A3A3A}
+.pcard-wish{color:#000}
+.pill{color:#1A1A1A}
+.pill:hover,.pill.is-on{color:#000}
+.tile,.tile span,.tile b{color:#000}
+.field{color:#000}
+.field::placeholder{color:#5A5A5A}
+.tlink{color:var(--pink-700)}
+.ae-badge{color:#000;background:rgba(255,255,255,.55);border-color:rgba(255,255,255,.8)}
+.ae-badge:hover{background:rgba(255,255,255,.75)}
+
+/* the article and its sidebar sit straight on the sky */
+.art-stand,.art-body p.body,.key p,.art-keys .khd span{color:#1A1A1A}
+.art-body h1,.art-body h2{color:#000}
+
+/* the drop widgets keep their dark glass, so their type stays white */
+.w-clock,.w-drop{background:var(--sheen-soft),rgba(9,32,74,.62)}
+
+/* unchanged on purpose */
+.nav a,.nav a:hover,.logo,.hdr .ico{color:#fff}
+.drawer,.drawer *,.searchbox,.searchbox *{color:inherit}
+.btn{color:#fff}
+.icard-txt,.icard-txt h3,.acard-bd,.acard-bd h3,.edu-card-bd,.edu-card-bd h3,.edu-card-bd p,.gal-ov,.gal-ov b{color:#fff}
